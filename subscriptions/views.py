@@ -3,12 +3,18 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User  # new
 from django.http.response import JsonResponse, HttpResponse  # updated
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib import messages
 from subscriptions.models import StripeCustomer, formforsubmit  # new
 from .forms import submitform, sendmailform
+
+
+def index(request):
+    return(render(request, "index.html"))
+
+
 
 @login_required
 def home(request):
@@ -45,13 +51,17 @@ def application(request):
         # get article data of the logged in user
         articles = formforsubmit.objects.filter(user=request.user)
 
-        return render(request, 'application_form.html', {
+        return render(request, 'application.html', {
             'subscription': subscription,
             'product': product,
             'articles': articles
         })
     except StripeCustomer.DoesNotExist:
-        return render(request, 'home.html')
+        return redirect('/home')
+
+@login_required
+def payment_info(request):
+    return(render(request, "payment_info.html"))
 
 @login_required
 def postform(request):
@@ -71,12 +81,8 @@ def postform(request):
             form.user = request.user
             form.save()
             messages.success(request, "Article posted successfully")
-            return render(request, 'application_form.html', {
-                'subscription': subscription,
-                'product': product,
-                'articles': articles,
-                'form': form
-            })
+            return redirect("/application")
+
         return render(request, 'postform.html', {
             'subscription': subscription,
             'product': product,
@@ -84,7 +90,7 @@ def postform(request):
             'form': form
         })
     except StripeCustomer.DoesNotExist:
-        return render(request, 'home.html')
+        return redirect("/home")
         
 
 @login_required

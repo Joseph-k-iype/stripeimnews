@@ -1,5 +1,6 @@
 console.log("Sanity check!");
 
+
 // Get Stripe publishable key
 fetch("/config/")
 .then((result) => { return result.json(); })
@@ -9,9 +10,10 @@ fetch("/config/")
 
   // new
   // Event handler
-  let submitBtn = document.querySelector("#submitBtn");
-  if (submitBtn !== null) {
-    submitBtn.addEventListener("click", () => {
+  let submitBtn = document.getElementsById("submitBtn");
+  if (submitBtn != null) {
+    submitBtn.addEventListener("click", () =>
+     {
     // Get Checkout Session ID
     fetch("/create-checkout-session/")
       .then((result) => { return result.json(); })

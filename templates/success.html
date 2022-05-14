@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,7 +14,10 @@
   <body>
     <div class="container mt-5">
       <p>You have successfully subscribed!</p>
-      <p><a href="{% url "subscriptions-home" %}">Return to the dashboard</a></p>
+      <p>Redirecting....</p>
+      {% with url="http://127.0.0.1:8000/postform"%}
+      <meta http-equiv = "refresh" content = "2; url = {{url}}" />
+      {% endwith %}
     </div>
   </body>
 </html>

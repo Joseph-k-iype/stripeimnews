@@ -31,7 +31,7 @@ class sendmail(models.Model):
     message = RichTextField(blank=True,null=True)
 
     def __str__(self):
-        return self.user.username
+        return self.message
     class Meta:
         verbose_name = 'Mail'
 
@@ -42,7 +42,7 @@ class responsefromuser(models.Model):
     response = RichTextField(blank=True,null=True)
 
     def __str__(self):
-        return self.user.username
+        return self.response
     class Meta:
         verbose_name = 'Response'
         
