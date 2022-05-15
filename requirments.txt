@@ -6,4 +6,6 @@ tzdata==2022.1
 django-ckeditor
 django-jazzmin
 django-allauth
+django-hitcount
 stripe
+gnewsclient

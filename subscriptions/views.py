@@ -1,3 +1,4 @@
+from hashlib import new
 import stripe
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -9,10 +10,14 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from subscriptions.models import StripeCustomer, formforsubmit  # new
 from .forms import submitform, sendmailform
+from gnewsclient import gnewsclient
 
 
 def index(request):
-    return(render(request, "index.html"))
+    client = gnewsclient.NewsClient(language='english', location='India', topic='World', use_opengraph=True, max_results=20)
+    news = client.get_news()
+    print(type(news))
+    return(render(request, "index.html", {'news' : news}))
 
 
 

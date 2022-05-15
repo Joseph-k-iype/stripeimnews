@@ -2,6 +2,8 @@
 <html lang="en">
 {% load static %}
 
+{% load hitcount_tags %}
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -90,7 +92,7 @@
                     <div class="article_actions col-6">
                         <div class="article_actions_btn">
                             <span class="material-icons">visibility</span>
-                            <p>10k</p>
+                            <p>{% get_hit_count for item %} </p>
                         </div>
                     </div>
                 </div>

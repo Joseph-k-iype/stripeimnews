@@ -2,7 +2,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from ckeditor.fields import RichTextField
-
+from hitcount.views import HitCountDetailView
 
 
 class StripeCustomer(models.Model):
@@ -24,6 +24,10 @@ class formforsubmit(models.Model):
         return self.headline
     class Meta:
         verbose_name = 'Article'
+
+class PostCountHitDetailView(HitCountDetailView):
+    model = formforsubmit        # your model goes here
+    count_hit = True   
 
 #send a mail to the user when the article is published
 class sendmail(models.Model):

@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount', # new
     'django.contrib.sites', # new
     'ckeditor',
-    
+    'hitcount'
 ]
 
 MIDDLEWARE = [

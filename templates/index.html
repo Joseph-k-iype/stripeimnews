@@ -78,20 +78,24 @@
 
     <!--Content Wrapper-->
     <div class="content_wrapper" data-scroll-container>
-
         <div class="content_grid">
-            <div class="article_card">
+            {% for item in news %}
+            
+            <a href="{{ item.link }}" class="article_card">
                 <div class="article_img">
-                    <img src="{% static 'img/img1.jpg' %}" alt="article img">
+                    {% if item.image %}
+                    <img src="{{ item.image }}" alt="article img">
+                    {% else %}
+                    <img src="{% static 'img/img4.jpg '%}" alt="article img">
+                    {% endif %}
                 </div>
                 <div class="article_description">
-                    <h6>Protest in Delhi</h6>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        the industry's</p>
+                    <h6>{{ item.title }}</h6>
+
                     <div class="article_actions col-6">
                         <div class="article_actions_btn">
                             <span class="material-icons">visibility</span>
-                            <p>10k</p>
+                            <p></p>
                         </div>
                         <div class="article_actions_btn">
                             <span class="material-icons">thumb_up</span>
@@ -103,7 +107,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
+            {% endfor %}
+
         </div>
     </div>
     {% endif %} {% endwith %}
