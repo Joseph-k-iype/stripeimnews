@@ -1,5 +1,8 @@
 
-from hashlib import blake2b
+import json
+from msvcrt import getch
+from pyexpat import model
+from select import select
 from django.contrib.auth.models import User
 from django.db import models
 from ckeditor.fields import RichTextField
@@ -31,26 +34,21 @@ class PostCountHitDetailView(HitCountDetailView):
     count_hit = True   
 
 #send a mail to the user when the article is published
+
 class sendmail(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     message = RichTextField(blank=True,null=True)
-
-    def __str__(self):
-        return self.message
+    fromAdmin = models.BooleanField(default=True)
     class Meta:
         verbose_name = 'Mail'
 
-'''
-class Message(models.Model):
+class Conversation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = RichTextField(blank = True)
-    fromAdmin = models.BooleanField(default=False)
+    view = models.BooleanField(default=False) # True if message is not seen by admin
     def __str__(self):
-        return(self.user)
-'''
+        return(self.user.email)
 
-
-
+        
 class responsefromuser(models.Model):
     #use user and article as foreign keys to get the response from the user
     user = models.ForeignKey(User, on_delete = models.CASCADE)

@@ -59,7 +59,10 @@
             <a class="nav-link" href="#">Profile</a>
           </li> -->
           <li class="nav-item">
-            <a class="nav-link" href="./login.html">Logout</a>
+            <form action = "/accounts/logout/">
+              {% csrf_token %}
+              <a type="submit" class="nav-link" href="./login.html">Logout</a>
+            </form>
           </li>
         </ul>
       </div>

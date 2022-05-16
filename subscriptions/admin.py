@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from subscriptions.models import StripeCustomer, formforsubmit, sendmail
+from subscriptions.models import  Conversation, StripeCustomer, formforsubmit, sendmail
 
 class formadmin(admin.ModelAdmin):
     search_fields = ['user', 'headline']
@@ -11,5 +11,5 @@ class formadmin(admin.ModelAdmin):
 
 admin.site.register(StripeCustomer)
 admin.site.register(formforsubmit, formadmin)
-admin.site.register(sendmail)
+admin.site.register(Conversation)
 

@@ -13,17 +13,36 @@
 
 <body>
     <div>
+        {% if admin %}
         {% for item in messages %}
-            {% if item.fromAdmin==true %}
-            <h1 align="left">{{ item.text }}</h1>
-            {% else %}
-            <h1 align="right">{{ item.text }}</h1>
-            {% endif %}
+        {% if item.fromAdmin %}
+        <h1 align="right">{{ item.message }}</h1>
+        {% else %}
+        <h1 align="left">{{ item.message }}</h1>
+        {% endif %}
         {% endfor %}
-        <form action="sendMessage" method="post">
+        <form action="sendMessageFromAdmin" method="post">
+            {% csrf_token %}
+            <input hidden="true" name="userEmail" value="{{ user.email }}">
             <input type="text" name="message">
             <input type="submit">
         </form>
+
+        {% else %}
+        {% for item in messages %}
+        {% if item.fromAdmin %}
+        <h1 align="left">{{ item.message }}</h1>
+        {% else %}
+        <h1 align="right">{{ item.message }}</h1>
+        {% endif %}
+        {% endfor %}
+        <form action="sendMessage" method="post">
+            {% csrf_token %}
+            <input type="text" name="message">
+            <input type="submit">
+        </form>
+        {% endif%}
+
     </div>
 
 

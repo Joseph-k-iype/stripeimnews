@@ -1,5 +1,8 @@
 from cgitb import text
+from email.message import Message
 from hashlib import new
+from trace import CoverageResults
+from typing import ValuesView
 import stripe
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -9,7 +12,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib import messages
-from subscriptions.models import Message, StripeCustomer, formforsubmit  # new
+from subscriptions.models import  Conversation, StripeCustomer, formforsubmit, sendmail  # new
 from .forms import submitform, sendmailform
 from gnewsclient import gnewsclient
 import requests 
@@ -97,20 +100,54 @@ def postform(request):
 
 @login_required
 def message_page(request):
-    messageList = Message.objects.filter(user = request.user)
+    messageList = sendmail.objects.filter(user = request.user)
+    print(request.user)
     return(render(request, "messages.html",{'messages' : messageList}))
 
 @login_required
 def sendMessage(request):
     if(request.method == 'POST'):
-        newMessage = Message(user = request.user, text = request.POST["message"])
+        newMessage = sendmail(user = request.user, message = request.POST["message"], fromAdmin=False)
         newMessage.save()
-        messageList = Message.objects.filter(user = request.session['user'])
-        return(render(request, "messages.html", {'messages', messageList}))
+        userConv = Conversation.objects.filter(user = request.user)
+        if(userConv.exists()):
+            userConv.delete()
+        userConv = Conversation(user = request.user, view = True)
+        userConv.save()
+        return(redirect("/message"))
     else:
-        return(redirect(""))
-        
-    
+        return(redirect('/'))
+
+@login_required
+def showMailListToAdmin(request):
+    if(request.user.is_superuser):
+        convList = Conversation.objects.all().order_by('-view')
+        print(convList)
+        return(render(request, "mail_list.html", {'conversations' : convList}))
+    else:
+        return(redirect('/'))
+
+@login_required
+def showConvToAdmin(request, mEmail):
+    mUser = User.objects.filter(email = mEmail).get()   
+    print(mUser)
+    messageList = sendmail.objects.filter(user = mUser)
+    return(render(request, "messages.html",{'messages' : messageList, 'admin' : True}))
+
+@login_required
+def sendMessageFromAdmin(request, mEmail):
+    mUser = User.objects.filter(email = mEmail).get()  
+    if(request.method == 'POST'):
+        newMessage = sendmail(user = mUser, message = request.POST["message"], fromAdmin=True)
+        newMessage.save()
+        userConv = Conversation.objects.filter(user = request.user)
+        if(userConv.exists()):
+            userConv.delete()
+        userConv = Conversation(user = request.user, view = True)
+        userConv.save()
+        return(redirect("/admin/subscriptions/message/"+mEmail+"/"))
+    else:
+        return(redirect('/'))
 
 @login_required
 def responseform(request):
