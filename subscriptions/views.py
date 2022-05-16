@@ -1,3 +1,4 @@
+from cgitb import text
 from hashlib import new
 import stripe
 from django.conf import settings
@@ -8,19 +9,17 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib import messages
-from subscriptions.models import StripeCustomer, formforsubmit  # new
+from subscriptions.models import Message, StripeCustomer, formforsubmit  # new
 from .forms import submitform, sendmailform
 from gnewsclient import gnewsclient
+import requests 
 
 
 def index(request):
-    client = gnewsclient.NewsClient(language='english', location='India', topic='World', use_opengraph=True, max_results=20)
-    news = client.get_news()
-    print(type(news))
+    apiKey = "20ca105d900e4b7aa72e8e86f0e0d208"
+    url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=20ca105d900e4b7aa72e8e86f0e0d208"
+    news = requests.get(url).json()['articles']
     return(render(request, "index.html", {'news' : news}))
-
-
-
 @login_required
 def home(request):
     try:
@@ -42,8 +41,6 @@ def home(request):
 
     except StripeCustomer.DoesNotExist:
         return render(request, 'home.html')
-
-
 @login_required
 def application(request):
     try:
@@ -97,6 +94,23 @@ def postform(request):
     except StripeCustomer.DoesNotExist:
         return redirect("/home")
         
+
+@login_required
+def message_page(request):
+    messageList = Message.objects.filter(user = request.user)
+    return(render(request, "messages.html",{'messages' : messageList}))
+
+@login_required
+def sendMessage(request):
+    if(request.method == 'POST'):
+        newMessage = Message(user = request.user, text = request.POST["message"])
+        newMessage.save()
+        messageList = Message.objects.filter(user = request.session['user'])
+        return(render(request, "messages.html", {'messages', messageList}))
+    else:
+        return(redirect(""))
+        
+    
 
 @login_required
 def responseform(request):

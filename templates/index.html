@@ -80,34 +80,29 @@
     <div class="content_wrapper" data-scroll-container>
         <div class="content_grid">
             {% for item in news %}
-            
-            <a href="{{ item.link }}" class="article_card">
+
+            <div class="article_card">
                 <div class="article_img">
-                    {% if item.image %}
-                    <img src="{{ item.image }}" alt="article img">
-                    {% else %}
-                    <img src="{% static 'img/img4.jpg '%}" alt="article img">
-                    {% endif %}
+                    <a href="{{ item.url }}" target="_blank">
+                        {% if item.urlToImage %}
+                        <img src="{{ item.urlToImage }}" alt="article img">
+                        {% else %}
+                        <img src="{% static 'img/img4.jpg '%}" alt="article img">
+                        {% endif %}
+                    </a>
+
                 </div>
                 <div class="article_description">
-                    <h6>{{ item.title }}</h6>
-
-                    <div class="article_actions col-6">
-                        <div class="article_actions_btn">
-                            <span class="material-icons">visibility</span>
-                            <p></p>
-                        </div>
-                        <div class="article_actions_btn">
-                            <span class="material-icons">thumb_up</span>
-                            <p>7k</p>
-                        </div>
-                        <div class="article_actions_btn">
-                            <span class="material-icons">thumb_down</span>
-                            <p>2k</p>
-                        </div>
-                    </div>
+                    <strong>
+                        <h6>{{ item.title }}</h6>
+                    </strong>
+                    <a href="{{ item.url }}" target="_blank">
+                        <p>
+                            Read More..
+                        </p>
+                    </a>
                 </div>
-            </a>
+            </div>
             {% endfor %}
 
         </div>

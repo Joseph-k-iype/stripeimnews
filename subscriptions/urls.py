@@ -13,4 +13,6 @@ urlpatterns = [
     path('postform/', views.postform, name = "postform"),
     path('response/', views.send_email, name = "response"),
     path('payment_info', views.payment_info, name = "payment_info"),
+    path('message', views.message_page, name = "message"),
+    path('sendMessage', views.sendMessage, name = "message"),
     ]

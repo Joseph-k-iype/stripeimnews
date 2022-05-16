@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Messages</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src="{% static 'main.js' %}"></script>
+</head>
+
+<body>
+    <div>
+        {% for item in messages %}
+            {% if item.fromAdmin==true %}
+            <h1 align="left">{{ item.text }}</h1>
+            {% else %}
+            <h1 align="right">{{ item.text }}</h1>
+            {% endif %}
+        {% endfor %}
+        <form action="sendMessage" method="post">
+            <input type="text" name="message">
+            <input type="submit">
+        </form>
+    </div>
+
+
+</body>
+
+</html>
