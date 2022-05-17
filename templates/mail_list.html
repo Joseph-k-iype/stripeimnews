@@ -12,11 +12,13 @@
 </head>
 
 <body>
+
     <div>
         {% for item in conversations %}
         <a href="/admin/subscriptions/message/{{ item.user.email }}">
             {{ item.user.email }}
         </a>
+        <br>
         {% endfor %}
        </div>
 </body>

@@ -109,11 +109,13 @@ def sendMessage(request):
     if(request.method == 'POST'):
         newMessage = sendmail(user = request.user, message = request.POST["message"], fromAdmin=False)
         newMessage.save()
-        userConv = Conversation.objects.filter(user = request.user)
-        if(userConv.exists()):
-            userConv.delete()
-        userConv = Conversation(user = request.user, view = True)
-        userConv.save()
+        try:
+            userConv = Conversation.objects.filter(user = request.user).get()
+        except:
+            userConv = Conversation(user = request.user, view = False)
+        finally:
+            userConv.view = False
+            userConv.save()
         return(redirect("/message"))
     else:
         return(redirect('/'))
@@ -121,7 +123,7 @@ def sendMessage(request):
 @login_required
 def showMailListToAdmin(request):
     if(request.user.is_superuser):
-        convList = Conversation.objects.all().order_by('-view')
+        convList = list(Conversation.objects.all().order_by('view'))
         print(convList)
         return(render(request, "mail_list.html", {'conversations' : convList}))
     else:
@@ -129,15 +131,21 @@ def showMailListToAdmin(request):
 
 @login_required
 def showConvToAdmin(request, mEmail):
-    mUser = User.objects.filter(email = mEmail).get()   
-    print(mUser)
-    messageList = sendmail.objects.filter(user = mUser)
-    return(render(request, "messages.html",{'messages' : messageList, 'admin' : True}))
+    if(request.user.is_superuser):
+        mUser = User.objects.filter(email = mEmail).get()  
+        mConv = Conversation.objects.filter(user = mUser).get()
+        mConv.view = True
+        mConv.save() 
+        print(mUser)
+        messageList = sendmail.objects.filter(user = mUser)
+        return(render(request, "messages.html",{'messages' : messageList, 'admin' : True}))
+    else:
+        return(redirect('/'))
 
 @login_required
 def sendMessageFromAdmin(request, mEmail):
-    mUser = User.objects.filter(email = mEmail).get()  
-    if(request.method == 'POST'):
+    if(request.method == 'POST' and request.user.is_superuser):
+        mUser = User.objects.filter(email = mEmail).get()  
         newMessage = sendmail(user = mUser, message = request.POST["message"], fromAdmin=True)
         newMessage.save()
         userConv = Conversation.objects.filter(user = request.user)
