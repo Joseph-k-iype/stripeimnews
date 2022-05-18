@@ -1,7 +1,5 @@
-<!-- templates/cancel.html -->
-
 {% load static %}
-{% with homeUrl="http://127.0.0.1:8000/home"%}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,8 +13,11 @@
   </head>
   <body>
     <div class="container mt-5">
-      <meta http-equiv = "refresh" content = "0; url = {{ homeUrl }}" />
-     </div>
+      <p>Subscription was not successful please try again.</p>
+      <p>Redirecting....</p>
+      {% with url="http://127.0.0.1:8000/postform"%}
+      <meta http-equiv = "refresh" content = "2; url = {{url}}" />
+      {% endwith %}
+    </div>
   </body>
-{% endwith %}
 </html>

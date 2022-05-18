@@ -24,7 +24,7 @@
 
   <nav class="navbar navbar-expand-sm|md|lg|-xl fixed-top">
     <div class="container-fluid px-lg-5 px-4 py-1">
-      <a class="navbar-brand" href="./index.html">IM World News</a>
+      <a class="navbar-brand" href="/">IM World News</a>
       <ul class="nav desktop_nav">
         <li class="nav-item">
           <a class="nav-link" href="#">About Us</a>
@@ -59,9 +59,9 @@
             <a class="nav-link" href="#">Profile</a>
           </li> -->
           <li class="nav-item">
-            <form action = "/accounts/logout/">
+            <form method="post" action="/accounts/logout/">
               {% csrf_token %}
-              <a type="submit" class="nav-link" href="./login.html">Logout</a>
+              <button type="submit">Sign Out</button>
             </form>
           </li>
         </ul>

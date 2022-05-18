@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
-{% with homeUrl="127.0.0.1:8000/home"%}
+{% with homeUrl="/home"%}
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,7 +28,7 @@
 
 <body>
     {% if user.is_authenticated %}
-    <meta http-equiv = "refresh" content = "0; url = {{ homeUrl }}" />
+    <meta http-equiv="refresh" content="0; url = {{ homeUrl }}" />
 
     {% else %}
     <!--Navbar-->
@@ -77,8 +78,22 @@
 
         <h1>Sign In</h1>
         <p>If you have not created an account yet, then please
-            <a href="/accounts/signup/?next=%2Fhome">sign up</a> first.
+            <a href="/accounts/signup/?next=%2F/accounts/login">sign up</a> first.
         </p>
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-error">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-error">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
         <form class="login" method="POST" action="/accounts/login/">
             {% csrf_token %}
             <p>
