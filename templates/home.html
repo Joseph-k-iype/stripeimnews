@@ -61,7 +61,7 @@
           <li class="nav-item">
             <form method="post" action="/accounts/logout/">
               {% csrf_token %}
-              <button type="submit">Sign Out</button>
+              <button class="btn yellow_btn" type="submit">Sign Out</button>
             </form>
           </li>
         </ul>
@@ -100,7 +100,10 @@
         {% endif %}
 
       </ul>
-      <a id="logout" class="btn yellow_btn" href="accounts/logout" role="button">Logout</a>
+      <form method="post" action="/accounts/logout/">
+        {% csrf_token %}
+        <button class="btn yellow_btn" type="submit">Sign Out</button>
+      </form>
     </div>
     {% if subscription.status == "active" %}
     <div class="content_wrapper col" data-scroll-container>
