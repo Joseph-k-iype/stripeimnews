@@ -8,7 +8,7 @@ class submitform(forms.ModelForm):
     #form for a particular user
     class Meta:
         model = formforsubmit
-        fields = ['headline', 'summary', 'article', 'schedule']
+        fields = ['headline', 'summary', 'article', 'schedule', 'prev_img']
         widgets = {
             'article': CKEditorWidget(),
             'schedule': forms.DateTimeInput(

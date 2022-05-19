@@ -9,3 +9,4 @@ django-allauth
 django-hitcount
 stripe
 gnewsclient
+pillow

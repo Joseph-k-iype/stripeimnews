@@ -24,6 +24,7 @@ class formforsubmit(models.Model):
     article = RichTextField(blank=True,null=True)
     schedule = models.DateTimeField()
     published = models.BooleanField(default=False)
+    prev_img = models.ImageField(upload_to = "images/")
     def __str__(self):
         return self.headline
     class Meta:

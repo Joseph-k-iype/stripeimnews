@@ -3,6 +3,8 @@ from django.urls import path, include # new
 from django.conf.urls.i18n import i18n_patterns
 from subscriptions import views
 
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/subscriptions/conversation/', views.showMailListToAdmin),
@@ -15,3 +17,4 @@ urlpatterns = [
 ]
 
 urlpatterns += i18n_patterns(path("admin/", admin.site.urls))
+urlpatterns +=  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

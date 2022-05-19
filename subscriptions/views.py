@@ -1,8 +1,3 @@
-from cgitb import text
-from email.message import Message
-from hashlib import new
-from trace import CoverageResults
-from typing import ValuesView
 import stripe
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -80,13 +75,15 @@ def postform(request):
         #generate a form for the user to post their article
         #error 'QueryDict' object has no attribute 'user'
 
-        form = submitform(request.POST)
+        form = submitform(request.POST, request.FILES)
+        print("FOR VALID = ",form.is_valid())
         if form.is_valid():
             form = form.save(commit=False)
             form.user = request.user
             form.save()
             messages.success(request, "Article posted successfully")
             return redirect("/application")
+        
 
         return render(request, 'postform.html', {
             'subscription': subscription,
