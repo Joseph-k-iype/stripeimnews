@@ -91,7 +91,7 @@
           <a type="submit" class="nav-link" href="payment_info">Create Articles</a>
         </li>
         <li type="submit" class="nav-item">
-          <a type="submit" class="nav-link">Your Articles</a>
+          <a type="submit" class="nav-link" href="payment_info">Your Articles</a>
         </li>
         <li class="nav-item">
           <a type="submit" class="nav-link" href="/message">Messages</a>
@@ -102,6 +102,7 @@
       </ul>
       <a id="logout" class="btn yellow_btn" href="accounts/logout" role="button">Logout</a>
     </div>
+    {% if subscription.status == "active" %}
     <div class="content_wrapper col" data-scroll-container>
       <h2>Dashboard</h2>
       <div class="content_grid">
@@ -129,6 +130,35 @@
 
       </div>
     </div>
+    {% else %}
+    <div class="content_wrapper col" data-scroll-container>
+      <h2>Dashboard</h2>
+      <div class="content_grid">
+        <a class="dashboard_card" href="/payment_info">
+          <div class="dashboard_card_img">
+            <img src="{% static 'img/img1.jpg' %}" alt="article img">
+          </div>
+          <h4 class="card-title">Your Article</h4>
+        </a>
+
+        <a class="dashboard_card" href="payment_info">
+          <div class="dashboard_card_img">
+            <img src="{% static 'img/img1.jpg' %}" alt="article img">
+          </div>
+          <h4 class="card-title">Create Article</h4>
+        </a>
+
+
+        <a class="dashboard_card" href="/message">
+          <div class="dashboard_card_img">
+            <img src="{% static 'img/img1.jpg' %}" alt="article img">
+          </div>
+          <h4 class="card-title">Messages</h4>
+        </a>
+
+      </div>
+    </div>
+    {% endif %}
   </div>
 
   <script src="{% static 'js/index.js' %}"></script>

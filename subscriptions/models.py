@@ -23,7 +23,7 @@ class formforsubmit(models.Model):
     summary = models.CharField(max_length = 500)
     article = RichTextField(blank=True,null=True)
     schedule = models.DateTimeField()
-
+    published = models.BooleanField(default=False)
     def __str__(self):
         return self.headline
     class Meta:
