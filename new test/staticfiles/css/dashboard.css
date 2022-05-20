@@ -1,0 +1,112 @@
+/*----CSS for all Dashboard pages----*/
+
+@import url(./style.css);
+
+.dashboard_left{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    padding: 5rem 2rem 2rem;
+    background-color: #0D1C2C;
+}
+
+/*----CSS for Login----*/
+.dashboard_left h5{
+    margin-top: 1rem;
+    font-size: 1.2rem;
+}
+.earth_img{
+    z-index: -1;
+    width: auto;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    opacity: 0.5;
+}
+.login{
+    background:none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.login_btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2rem;
+    border: .1rem solid #ffffff;
+    color: white;
+    margin-top: 5rem;
+}
+.login_btn:hover{
+    color: #B9EFA4;
+    border-color:#B9EFA4;
+}
+.login_btn img{
+    width: 1.8rem;
+    margin-right: 1.2rem;
+}
+.login_btn h4{
+    font-size: 1.2rem;
+    margin-bottom: 0;
+}
+
+/*----CSS for Dashboard----*/
+.content_grid{
+    margin: 3rem 0;
+    justify-content: start;
+}
+.dashboard_card{
+    height: 17rem;
+    margin: 0 1rem 2rem 0;
+}
+.dashboard_card{
+    text-align: center;
+    flex-direction: column;
+}
+.dashboard_card_img{
+    height: 12rem;
+    overflow: hidden;
+    background-color: #0D1C2C;
+    border-radius: .7rem;
+}
+.dashboard_card_img img{
+    height: 100%;
+}
+.dashboard_card h4{
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+}
+
+
+/*-------Media Queries for Responsiveness--------*/
+@media screen and (min-width: 768px){
+    /*-----medium screens (md)-----*/
+    /*-----CSS for Login-----*/
+    .earth_img{
+        opacity: 1;
+    }
+    .login{
+        background-color: #0D1C2C;
+    }
+    /*-----CSS for Dashboard-----*/
+    .dashboard_card{
+        width: 45%;
+    }
+}
+@media screen and (min-width: 992px){
+    /*-----large screens (lg)-----*/
+    /*-----CSS for Login-----*/
+    .earth_img{
+        width: 100%;
+        height: auto;
+    }
+    /*-----CSS for Dashboard-----*/
+    .dashboard_card{
+        width: 30%;
+    }
+}
+
+
+
