@@ -1,0 +1,171 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Django + Stripe Subscriptions</title>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+  <script src="{% static 'main.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-sm|md|lg|-xl fixed-top">
+    <div class="container-fluid px-lg-5 px-4 py-1">
+      <a class="navbar-brand" href="/">IM World News</a>
+      <ul class="nav desktop_nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact Us</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a id="profile" class="btn yellow_btn" href="#" role="button">Profile</a>
+        </li> -->
+      </ul>
+      <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+        data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="material-icons" style="color:#ffffff; font-size: 24px;">menu</span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="#">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact Us</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="#">Profile</a>
+          </li> -->
+          <li class="nav-item">
+            <form method="post" action="/accounts/logout/">
+              {% csrf_token %}
+              <button class="btn yellow_btn" type="submit">Sign Out</button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="d-flex">
+    <!--Left Pane-->
+    <div class="dashboard_left col-lg-2 col-md-3 col-4 d-sm-flex d-none">
+      <ul class="nav">
+        {% if subscription.status == "active" %}
+
+        <li class="nav-item">
+          <a class="nav-link" href="postform"> Create Articles</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/application">Your Articles</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/message">Messages</a>
+        </li>
+
+        {% else %}
+
+
+        <li class="nav-item">
+          <a type="submit" class="nav-link" href="payment_info">Create Articles</a>
+        </li>
+        <li type="submit" class="nav-item">
+          <a type="submit" class="nav-link" href="payment_info">Your Articles</a>
+        </li>
+        <li class="nav-item">
+          <a type="submit" class="nav-link" href="/message">Messages</a>
+        </li>
+
+        {% endif %}
+
+      </ul>
+      <form method="post" action="/accounts/logout/">
+        {% csrf_token %}
+        <button class="btn yellow_btn" type="submit">Sign Out</button>
+      </form>
+    </div>
+    {% if subscription.status == "active" %}
+    <div class="content_wrapper col" data-scroll-container>
+      <h2>Dashboard</h2>
+      <div class="content_grid">
+        <a class="dashboard_card" href="/application">
+          <div class="dashboard_card_img">
+            <img src="{% static 'img/img1.jpg' %}" alt="article img">
+          </div>
+          <h4 class="card-title">Your Article</h4>
+        </a>
+
+        <a class="dashboard_card" href="postform">
+          <div class="dashboard_card_img">
+            <img src="{% static 'img/img1.jpg' %}" alt="article img">
+          </div>
+          <h4 class="card-title">Create Article</h4>
+        </a>
+
+
+        <a class="dashboard_card" href="/message">
+          <div class="dashboard_card_img">
+            <img src="{% static 'img/img1.jpg' %}" alt="article img">
+          </div>
+          <h4 class="card-title">Messages</h4>
+        </a>
+
+      </div>
+    </div>
+    {% else %}
+    <div class="content_wrapper col" data-scroll-container>
+      <h2>Dashboard</h2>
+      <div class="content_grid">
+        <a class="dashboard_card" href="/payment_info">
+          <div class="dashboard_card_img">
+            <img src="{% static 'img/img1.jpg' %}" alt="article img">
+          </div>
+          <h4 class="card-title">View your tasks</h4>
+        </a>
+
+        <a class="dashboard_card" href="payment_info">
+          <div class="dashboard_card_img">
+            <img src="{% static 'img/img1.jpg' %}" alt="article img">
+          </div>
+          <h4 class="card-title">Create Article</h4>
+        </a>
+
+
+        <a class="dashboard_card" href="/message">
+          <div class="dashboard_card_img">
+            <img src="{% static 'img/img1.jpg' %}" alt="article img">
+          </div>
+          <h4 class="card-title">Messages</h4>
+        </a>
+
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <script src="{% static 'js/index.js' %}"></script>
+
+</body>
+
+</html>

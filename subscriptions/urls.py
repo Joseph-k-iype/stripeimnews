@@ -14,5 +14,8 @@ urlpatterns = [
     path('response/', views.send_email, name = "response"),
     path('payment_info', views.payment_info, name = "payment_info"),
     path('message', views.message_page, name = "message"),
+    path('getMessage', views.getMessages, name = "message"),
     path('sendMessage', views.sendMessage, name = "message"),
+    path('operations/', views.tasksview, name = "operations"),
+    path('task_detail/<int:id>/', views.taskdetailview, name = "task_detail"),
     ]

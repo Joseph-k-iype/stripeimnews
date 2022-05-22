@@ -83,7 +83,7 @@ body{
 .content_grid{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
     margin: 0 -1%;
 }
 
@@ -98,8 +98,10 @@ body{
 /*-----------------------------------------------------------------------*/
 
 /*---------Article--------*/
-.article_card, .package_card, .dashboard_card{
-    display: flex;
+.article_card ,.package_card  ,.dashboard_card{
+    display: flexbox;
+    flex-direction: row;
+    justify-content: space-evenly;
     background-color: #0F283F;
     width:100%;
     border-radius: .7rem;

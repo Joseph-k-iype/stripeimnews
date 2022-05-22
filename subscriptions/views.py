@@ -1,3 +1,5 @@
+
+import email
 import stripe
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -7,17 +9,29 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib import messages
-from subscriptions.models import  Conversation, StripeCustomer, formforsubmit, sendmail  # new
+from subscriptions.models import  Conversation, StripeCustomer, formforsubmit, sendmail, IpAddress, tasksforoperations  # new
 from .forms import submitform, sendmailform
-from gnewsclient import gnewsclient
 import requests 
+
+import ipaddress
+
 
 
 def index(request):
     apiKey = "20ca105d900e4b7aa72e8e86f0e0d208"
     url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=20ca105d900e4b7aa72e8e86f0e0d208"
     news = requests.get(url).json()['articles']
-    return(render(request, "index.html", {'news' : news}))
+    ip = request.META['REMOTE_ADDR']
+    #get the ip address of the client
+    ip_address = ipaddress.ip_address(ip)
+    #save the ip address in the database
+    IpAddress.objects.create(ip=ip_address)
+    #get the ip address of the client
+    count = IpAddress.objects.count()
+    #get total number of users
+    noofusers = User.objects.count()
+    print(noofusers)
+    return(render(request, "index.html", {'news' : news, 'count': count, 'noofusers': noofusers}))
 @login_required
 def home(request):
     try:
@@ -97,8 +111,14 @@ def postform(request):
 
 @login_required
 def message_page(request):
+    try:
+            userConv = Conversation.objects.filter(user = request.user).get()
+    except:
+        userConv = Conversation(user = request.user, view = False)
+    finally:
+        userConv.view = False
+        userConv.save()
     messageList = sendmail.objects.filter(user = request.user)
-    print(request.user)
     return(render(request, "messages.html",{'messages' : messageList}))
 
 @login_required
@@ -112,6 +132,7 @@ def sendMessage(request):
             userConv = Conversation(user = request.user, view = False)
         finally:
             userConv.view = False
+            userConv.loaded = False
             userConv.save()
         return(redirect("/message"))
     else:
@@ -130,9 +151,13 @@ def showMailListToAdmin(request):
 def showConvToAdmin(request, mEmail):
     if(request.user.is_superuser):
         mUser = User.objects.filter(email = mEmail).get()  
-        mConv = Conversation.objects.filter(user = mUser).get()
-        mConv.view = True
-        mConv.save() 
+        try:
+             userConv = Conversation.objects.filter(user = request.user).get()
+        except:
+             userConv = Conversation(user = request.user, view = False)
+        finally:
+             userConv.view = False
+             userConv.save()
         print(mUser)
         messageList = sendmail.objects.filter(user = mUser)
         return(render(request, "messages.html",{'messages' : messageList, 'admin' : True}))
@@ -145,14 +170,39 @@ def sendMessageFromAdmin(request, mEmail):
         mUser = User.objects.filter(email = mEmail).get()  
         newMessage = sendmail(user = mUser, message = request.POST["message"], fromAdmin=True)
         newMessage.save()
-        userConv = Conversation.objects.filter(user = request.user)
-        if(userConv.exists()):
-            userConv.delete()
-        userConv = Conversation(user = request.user, view = True)
-        userConv.save()
+        try:
+             userConv = Conversation.objects.filter(user = mUser).get()
+        except:
+             userConv = Conversation(user = request.user, view = True)
+        finally:
+             userConv.view = True
+             userConv.save()
         return(redirect("/admin/subscriptions/message/"+mEmail+"/"))
     else:
         return(redirect('/'))
+
+@login_required
+def getMessages(request):
+    userConv = Conversation.objects.filter(user = request.user).get()
+    if(userConv.view == True):
+        userConv.view = False
+        userConv.save()
+        messageList = sendmail.objects.filter(user = request.user)
+        return JsonResponse({"messages":list(messageList.values())})
+    else:
+        return JsonResponse({"messages" : ""})
+
+@login_required
+def getMessageForAdmin(request, mEmail):
+    mUser = User.objects.filter(email = mEmail).get()
+    userConv = Conversation.objects.filter(user = mUser).get()
+    if(userConv.loaded):
+        return(JsonResponse({"messages" : ""}))
+    else:
+        userConv.loaded = True
+        userConv.save()
+        messageList = sendmail.objects.filter(user = mUser).values()
+        return JsonResponse({"messages":list(messageList.values())})
 
 @login_required
 def responseform(request):
@@ -303,3 +353,28 @@ def send_email(request):
         form = sendmailform()
         return render(request, 'response_form.html', {'form': form})
 
+# def tasks():
+#     #send tasks to staff from the admin from tasksforoperations table
+#     tasks = tasksforoperations.objects.all()
+#     for task in tasks:
+#         if task.status == False:
+
+@login_required
+def tasksview(request):
+    #staff should view only thier tasks
+    if request.user.is_staff:
+        tasks = tasksforoperations.objects.filter(user=request.user)
+        return render(request, 'tasklist.html', {'tasks': tasks})
+    else:
+        return redirect('/')
+
+@login_required
+def taskdetailview(request, id):
+    #staff should view only thier tasks
+    if request.user.is_staff:
+        task = tasksforoperations.objects.get(id=id)
+        return render(request, 'task_detail.html', {'task': task})
+    else:
+        task = tasksforoperations.objects.get(id=id)
+        return render(request, 'task_detail.html', {'task': task})
+        return redirect('/')
