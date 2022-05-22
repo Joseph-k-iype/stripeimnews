@@ -194,8 +194,9 @@ def getMessages(request):
 
 @login_required
 def getMessageForAdmin(request, mEmail):
-    mUser = User.objects.filter(email = mEmail).get()
-    userConv = Conversation.objects.filter(user = mUser).get()
+    if request.user.is_superuser:
+        mUser = User.objects.filter(email = mEmail).get()
+        userConv = Conversation.objects.filter(user = mUser).get()
     if(userConv.loaded):
         return(JsonResponse({"messages" : ""}))
     else:

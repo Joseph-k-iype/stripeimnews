@@ -1,5 +1,5 @@
 body {
-	background: #E5DDD5 url("https://www.toptal.com/designers/subtlepatterns/patterns/sports.png") fixed;
+    background-color: #0A1520;
     
 }
 .page-header {
@@ -51,4 +51,5 @@ body {
 	margin: 0 auto .5em;
 	font-size: 14px;
 	font-weight: bold;
+	
 }

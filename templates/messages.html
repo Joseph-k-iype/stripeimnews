@@ -10,11 +10,20 @@
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+  <script src = "https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
   <title>Document</title>
 
  
-
+<script>
+  //scroll to the end of the page on load
+  $(document).ready(function(){
+    $('html, body').animate({
+        scrollTop: $(document).height()
+    }, 'slow');
+  });
+</script>
 </head>
 
 <body>
