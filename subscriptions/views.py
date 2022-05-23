@@ -177,7 +177,7 @@ def sendMessageFromAdmin(request, mEmail):
         finally:
              userConv.view = True
              userConv.save()
-        return(redirect("/admin/subscriptions/message/"+mEmail+"/"))
+        return(redirect("/admin/subscriptions/message/"+mEmail+""))
     else:
         return(redirect('/'))
 
@@ -197,14 +197,16 @@ def getMessageForAdmin(request, mEmail):
     if request.user.is_superuser:
         mUser = User.objects.filter(email = mEmail).get()
         userConv = Conversation.objects.filter(user = mUser).get()
-    if(userConv.loaded):
-        return(JsonResponse({"messages" : ""}))
+        if(userConv.loaded):
+            return(JsonResponse({"messages" : ""}))
+        else:
+            userConv.loaded = True
+            userConv.save()
+            messageList = sendmail.objects.filter(user = mUser).values()
+            return JsonResponse({"messages":list(messageList.values())})
     else:
-        userConv.loaded = True
-        userConv.save()
-        messageList = sendmail.objects.filter(user = mUser).values()
-        return JsonResponse({"messages":list(messageList.values())})
-
+        return(redirect("/"))
+        
 @login_required
 def responseform(request):
     try:

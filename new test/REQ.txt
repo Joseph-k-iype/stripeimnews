@@ -1,4 +1,0 @@
-index.html-> sign in form -> dashboard -> click on create go to home -> stripe ->
--> on success || -> go to step-2 -> after submit -> go to dashboard ->
--> your article -> list all the articles
-message -> list all the messages from admin-> on click detailed view view should come -> n number of reply to a mail

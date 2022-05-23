@@ -21,7 +21,7 @@
   $(document).ready(function(){
     $('html, body').animate({
         scrollTop: $(document).height()
-    }, 'slow');
+    }, 'fast');
   });
 </script>
 </head>
@@ -131,7 +131,6 @@
 </script>
 {% else %}
 <script>
-
   $(document).ready(function () {
     setInterval(function () {
       $.ajax({
@@ -143,7 +142,7 @@
           }
         },
       });
-    }, 1000);
+    }, 5000);
   })
 </script>
 {% endif %}
