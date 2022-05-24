@@ -124,7 +124,7 @@ def message_page(request):
 @login_required
 def sendMessage(request):
     if(request.method == 'POST'):
-        newMessage = sendmail(user = request.user, message = request.POST["message"], fromAdmin=False)
+        newMessage = sendmail(user = request.user, message = request.POST["message"], fromAdmin=False, seenByAdmin = False, seenByUser = True)
         newMessage.save()
         try:
             userConv = Conversation.objects.filter(user = request.user).get()
@@ -168,7 +168,7 @@ def showConvToAdmin(request, mEmail):
 def sendMessageFromAdmin(request, mEmail):
     if(request.method == 'POST' and request.user.is_superuser):
         mUser = User.objects.filter(email = mEmail).get()  
-        newMessage = sendmail(user = mUser, message = request.POST["message"], fromAdmin=True)
+        newMessage = sendmail(user = mUser, message = request.POST["message"], fromAdmin=True, seenByAdmin = True, seenByUser = False)
         newMessage.save()
         try:
              userConv = Conversation.objects.filter(user = mUser).get()
@@ -184,11 +184,15 @@ def sendMessageFromAdmin(request, mEmail):
 @login_required
 def getMessages(request):
     userConv = Conversation.objects.filter(user = request.user).get()
-    if(userConv.view == True):
+    if(userConv.view):
         userConv.view = False
         userConv.save()
-        messageList = sendmail.objects.filter(user = request.user)
-        return JsonResponse({"messages":list(messageList.values())})
+        messageList = sendmail.objects.filter(user = request.user , seenByUser = False)
+        newResp = JsonResponse({"messages" : list(messageList.values())})
+        for i in messageList:
+            i.seenByAdmin = True
+            i.save()         
+        return newResp
     else:
         return JsonResponse({"messages" : ""})
 
@@ -202,8 +206,12 @@ def getMessageForAdmin(request, mEmail):
         else:
             userConv.loaded = True
             userConv.save()
-            messageList = sendmail.objects.filter(user = mUser).values()
-            return JsonResponse({"messages":list(messageList.values())})
+            messageList = sendmail.objects.filter(user = mUser, seenByAdmin = False)
+            newResp = JsonResponse({"messages" : list(messageList.values())})
+            for i in messageList:
+                i.seenByAdmin = True
+                i.save()         
+            return newResp
     else:
         return(redirect("/"))
         

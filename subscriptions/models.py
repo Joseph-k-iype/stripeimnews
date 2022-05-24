@@ -42,6 +42,8 @@ class sendmail(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     message = RichTextField(blank=True,null=True)
     fromAdmin = models.BooleanField(default=True)
+    seenByAdmin = models.BooleanField(default=True)
+    seenByUser = models.BooleanField(default=True)
     class Meta:
         verbose_name = 'Mail'
 
