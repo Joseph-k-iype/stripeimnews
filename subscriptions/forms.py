@@ -1,12 +1,8 @@
 #form data for posting a new article
+
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 from .models import *
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
-from crispy_forms.bootstrap import FormActions
-from django.template.context_processors import csrf
-from crispy_forms.utils import render_crispy_form
 
 class submitform(forms.ModelForm):
     #form for a particular user
@@ -43,7 +39,7 @@ class submitform(forms.ModelForm):
   
     class Meta:
         model = formforsubmit
-        fields = ['headline', 'summary', 'article', 'schedule']
+        fields = ['headline', 'summary', 'article', 'schedule', 'prev_img']
         
 
         widgets = {

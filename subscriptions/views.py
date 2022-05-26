@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib import messages
+from subscriptions.forms import MessageForm, submitform
 from subscriptions.models import  *
 import requests 
 
@@ -90,7 +91,7 @@ def postform(request):
         #error 'QueryDict' object has no attribute 'user'
 
         form = submitform(request.POST, request.FILES)
-        print("FOR VALID = ",form.is_valid())
+        print("FORM VALID = ",form.is_valid())
         if form.is_valid():
             form = form.save(commit=False)
             form.user = request.user
@@ -303,6 +304,8 @@ def messagePage(request, mEmail = ""):
                 i.seenByAdmin = True
                 i.save()
             return(render(request, "messages.html", {"messages" : messageList}))
+    
+    
     else:
         try:
             userConv = Conversation.objects.filter(user = request.user).get()
@@ -324,6 +327,7 @@ def messagePage(request, mEmail = ""):
                 i.seenByUser = True
                 i.save()
             return(render(request, "messages.html", {"messages" : messageList}))
+
 
 @login_required
 def newConversation(request):
