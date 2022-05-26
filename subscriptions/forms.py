@@ -59,12 +59,4 @@ class submitform(forms.ModelForm):
             
         }
 
-#form for sending a mail to the user
-class sendmailform(forms.ModelForm):
-    class Meta:
-        model = sendmail
-        fields = ['message']
-        widgets = {
-            'message': CKEditorWidget(),
-        }
         
