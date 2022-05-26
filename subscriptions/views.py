@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib import messages
-from subscriptions.forms import MessageForm, submitform
+from subscriptions.forms import submitform
 from subscriptions.models import  *
 import requests 
 
@@ -33,8 +33,11 @@ def index(request):
     noofusers = User.objects.count()
     print(noofusers)
     return(render(request, "index.html", {'news' : news, 'count': count, 'noofusers': noofusers}))
+
 @login_required
 def home(request):
+    if(request.user.is_superuser):
+        return(redirect("/admin"))
     try:
         # Retrieve the subscription & product
         stripe_customer = StripeCustomer.objects.get(user=request.user)
@@ -54,6 +57,7 @@ def home(request):
 
     except StripeCustomer.DoesNotExist:
         return render(request, 'home.html')
+
 @login_required
 def application(request):
     try:

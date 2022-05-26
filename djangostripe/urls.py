@@ -8,7 +8,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/subscriptions/conversation/', views.showConversationsToAdmin),
     path('admin/subscriptions/conversation/add/', views.newConversation),
-    path('admin/subscriptions/message/<str:mEmail>/', views.formMessagePage),
+    path('admin/subscriptions/message/<str:mEmail>/', views.messagePage),
     path('admin/subscriptions/message/<str:mEmail>/getMessages', views.getMessages, name = "message"),
     path('admin/', admin.site.urls),
     path('', include('subscriptions.urls')), # new
