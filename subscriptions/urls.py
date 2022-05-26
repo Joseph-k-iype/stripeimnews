@@ -11,11 +11,9 @@ urlpatterns = [
     path('webhook/', views.stripe_webhook),  # new
     path('application/', views.application, name = "application_form"),
     path('postform/', views.postform, name = "postform"),
-    path('response/', views.send_email, name = "response"),
     path('payment_info', views.payment_info, name = "payment_info"),
-    path('message', views.message_page, name = "message"),
+    path('message', views.messagePage, name = "message"),
     path('getMessage', views.getMessages, name = "message"),
-    path('sendMessage', views.sendMessage, name = "message"),
     path('operations/', views.tasksview, name = "operations"),
     path('task_detail/<int:id>/', views.taskdetailview, name = "task_detail"),
     ]

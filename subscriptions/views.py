@@ -1,4 +1,3 @@
-
 import email
 import stripe
 from django.conf import settings
@@ -9,8 +8,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib import messages
-from subscriptions.models import  Conversation, StripeCustomer, formforsubmit, sendmail, IpAddress, tasksforoperations  # new
-from .forms import submitform, sendmailform
+from subscriptions.models import  *
 import requests 
 
 import ipaddress
@@ -107,137 +105,7 @@ def postform(request):
         })
     except StripeCustomer.DoesNotExist:
         return redirect("/home")
-        
-
-@login_required
-def message_page(request):
-    try:
-            userConv = Conversation.objects.filter(user = request.user).get()
-    except:
-        userConv = Conversation(user = request.user, view = False)
-    finally:
-        userConv.view = False
-        userConv.save()
-    messageList = sendmail.objects.filter(user = request.user)
-    return(render(request, "messages.html",{'messages' : messageList}))
-
-@login_required
-def sendMessage(request):
-    if(request.method == 'POST'):
-        newMessage = sendmail(user = request.user, message = request.POST["message"], fromAdmin=False, seenByAdmin = False, seenByUser = True)
-        newMessage.save()
-        try:
-            userConv = Conversation.objects.filter(user = request.user).get()
-        except:
-            userConv = Conversation(user = request.user, view = False)
-        finally:
-            userConv.view = False
-            userConv.loaded = False
-            userConv.save()
-        return(redirect("/message"))
-    else:
-        return(redirect('/'))
-
-@login_required
-def showMailListToAdmin(request):
-    if(request.user.is_superuser):
-        convList = list(Conversation.objects.all().order_by('view'))
-        userList = list(User.objects.all())
-        print(userList)
-        return(render(request, "mail_list.html", {'conversations' : convList, 'users' : userList}))
-    else:
-        return(redirect('/'))
-
-@login_required
-def showConvToAdmin(request, mEmail):
-    if(request.user.is_superuser):
-        mUser = User.objects.filter(email = mEmail).get()  
-        try:
-             userConv = Conversation.objects.filter(user = mUser).get()
-        except:
-             userConv = Conversation(user = mUser, view = False)
-        finally:
-             userConv.view = False
-             userConv.save()
-        print(mUser)
-        messageList = sendmail.objects.filter(user = mUser)
-        return(render(request, "messages.html",{'messages' : messageList, 'admin' : True}))
-    else:
-        return(redirect('/'))
-
-
-@login_required
-def addConversation(request):
-    if(request.user.is_superuser):
-        userList = User.objects.all()
-        return(render(request, "startchat.html", {'userList' : userList}))
-
-@login_required
-def startChat(request, mEmail):
-    if(request.user.is_superuser):
-        mUser = User.objects.filter(email = mEmail).get()   
-        try:
-            userConv = Conversation.objects.filter(user = mUser).get()
-        except:
-            userConv = Conversation(user = mUser, view = False)
-        finally:
-            userConv.view = False
-            userConv.save()
-            return(redirect("/admin/subscriptions/message/"+mEmail+"/"))
-    else:
-        return(redirect('/'))
-
-@login_required
-def sendMessageFromAdmin(request, mEmail):
-    if(request.method == 'POST' and request.user.is_superuser):
-        mUser = User.objects.filter(email = mEmail).get()  
-        newMessage = sendmail(user = mUser, message = request.POST["message"], fromAdmin=True, seenByAdmin = True, seenByUser = False)
-        newMessage.save()
-        try:
-             userConv = Conversation.objects.filter(user = mUser).get()
-        except:
-             userConv = Conversation(user = request.user, view = True)
-        finally:
-             userConv.view = True
-             userConv.save()
-        return(redirect("/admin/subscriptions/message/"+mEmail+""))
-    else:
-        return(redirect('/'))
-
-@login_required
-def getMessages(request):
-    userConv = Conversation.objects.filter(user = request.user).get()
-    if(userConv.view):
-        userConv.view = False
-        userConv.save()
-        messageList = sendmail.objects.filter(user = request.user , seenByUser = False)
-        newResp = JsonResponse({"messages" : list(messageList.values())})
-        for i in messageList:
-            i.seenByAdmin = True
-            i.save()         
-        return newResp
-    else:
-        return JsonResponse({"messages" : ""})
-
-@login_required
-def getMessageForAdmin(request, mEmail):
-    if request.user.is_superuser:
-        mUser = User.objects.filter(email = mEmail).get()
-        userConv = Conversation.objects.filter(user = mUser).get()
-        if(userConv.loaded):
-            return(JsonResponse({"messages" : ""}))
-        else:
-            userConv.loaded = True
-            userConv.save()
-            messageList = sendmail.objects.filter(user = mUser, seenByAdmin = False)
-            newResp = JsonResponse({"messages" : list(messageList.values())})
-            for i in messageList:
-                i.seenByAdmin = True
-                i.save()         
-            return newResp
-    else:
-        return(redirect("/"))
-        
+          
 @login_required
 def responseform(request):
     try:
@@ -271,30 +139,11 @@ def responseform(request):
     except StripeCustomer.DoesNotExist:
         return render(request, 'home.html')
 
-
-
-
-        #get data from the form and save it to the database
-    #     if request.method == 'POST':
-    #         form = postform(request.POST)
-    #         if form.is_valid():
-    #             article = form.save(commit=False)
-    #             article.url = form.data['headline']
-    #             article.save()
-    #             return render(request, 'application.html')
-    #     else:
-    #         form = postform()
-    #     return render(request, 'postform.html', {'form': form})
-    # except StripeCustomer.DoesNotExist:
-    #     return render(request, 'home.html')
-
-
 @csrf_exempt
 def stripe_config(request):
     if request.method == 'GET':
         stripe_config = {'publicKey': settings.STRIPE_PUBLISHABLE_KEY}
         return JsonResponse(stripe_config, safe=False)
-
 
 @csrf_exempt
 def create_checkout_session(request):
@@ -320,16 +169,13 @@ def create_checkout_session(request):
         except Exception as e:
             return JsonResponse({'error': str(e)})
 
-
 @login_required
 def success(request):
     return render(request, 'success.html')
 
-
 @login_required
 def cancel(request):
     return render(request, 'cancel.html')
-
 
 @csrf_exempt
 def stripe_webhook(request):
@@ -370,29 +216,6 @@ def stripe_webhook(request):
 
     return HttpResponse(status=200)
 
-
-#send email to the user when they submit an article
-def send_email(request):
-    if request.method == 'POST':
-        form = sendmailform(request.POST)
-        if form.is_valid():
-            form = form.save(commit=False)
-            form.user = request.user
-            form.save()
-            messages.success(request, "Email sent successfully")
-            return render(request, 'response_form.html', {'form': form})
-        
-        return render(request, 'response_form.html', {'form': form})
-    else:
-        form = sendmailform()
-        return render(request, 'response_form.html', {'form': form})
-
-# def tasks():
-#     #send tasks to staff from the admin from tasksforoperations table
-#     tasks = tasksforoperations.objects.all()
-#     for task in tasks:
-#         if task.status == False:
-
 @login_required
 def tasksview(request):
     #staff should view only thier tasks
@@ -412,3 +235,86 @@ def taskdetailview(request, id):
         task = tasksforoperations.objects.get(id=id)
         return render(request, 'task_detail.html', {'task': task})
         return redirect('/')
+
+
+@login_required
+def showConversationsToAdmin(request):
+    if(request.user.is_superuser):
+        convList = Conversation.objects.order_by('seenByAdmin')
+        return(render(request,"mail_list.html",{"conversations" : convList}))
+    else:
+        return(redirect("/"))
+
+
+def getMessages(request, mEmail = ""):
+    if(request.user.is_superuser):
+        # messages are for admin
+        mUser = User.objects.filter(email = mEmail).get()
+        userConv = Conversation.objects.filter(user = mUser).get()
+        if(userConv.seenByAdmin == False):
+            userConv.seenByAdmin = True
+            userConv.save()
+            messageList = Messages.objects.filter(user = mUser, seenByAdmin = False)
+            resp = JsonResponse({"messages" : list(messageList.values())})
+            for i in messageList:
+                i.seenByAdmin = True
+                i.save()
+            return(resp)
+        else:
+            return(JsonResponse({"messages" : ""}))
+    else:
+        userConv = Conversation.objects.filter(user = request.user).get()
+        if(userConv.seenByUser == False):
+            userConv.seenByUser = True
+            userConv.save()
+            messageList = Messages.objects.filter(user = request.user, seenByUser = False)
+            resp = JsonResponse({"messages" : list(messageList.values())})
+            print(resp)
+            for i in messageList:
+                i.seenByUser = True
+                i.save()
+            return(resp)
+        else:
+            return(JsonResponse({"messages" : ""}))
+
+
+@login_required
+def messagePage(request, mEmail = ""):
+    print("EMAIL = " + mEmail)
+    if(request.user.is_superuser):
+        # Message from and to the admin
+        mUser = User.objects.filter(email = mEmail).get()
+        userConv = Conversation.objects.filter(user = mUser).get()
+        if(request.method == "POST"):
+            userConv.seenByUser = False
+            userConv.save()
+            message = request.POST["message"]
+            newMessage = Messages(user = mUser, message = message, fromAdmin = True, seenByAdmin = True, seenByUser = False, timeSent = datetime.now())
+            newMessage.save()
+            return(JsonResponse({'messages' : message}))
+        else:
+            # List the messages
+            userConv.seenByAdmin = True
+            userConv.save()
+            messageList = Messages.objects.filter(user = mUser).order_by('timeSent')
+            for i in messageList:
+                i.seenByAdmin = True
+                i.save()
+            return(render(request, "messages.html", {"messages" : messageList}))
+    else:
+        userConv = Conversation.objects.filter(user = request.user).get()
+        if(request.method == "POST"):
+            userConv.seenByAdmin = False
+            userConv.save()
+            message = request.POST["message"]
+            newMessage = Messages(user = request.user, message = message, fromAdmin = False, seenByAdmin = False, seenByUser = True, timeSent = datetime.now())
+            newMessage.save()
+            return(JsonResponse({'messages' : message}))
+        else:
+            userConv.seenByUser = True
+            userConv.save()
+            messageList = Messages.objects.filter(user = request.user).order_by('timeSent')
+            for i in messageList:
+                i.seenByUser = True
+                i.save()
+            return(render(request, "messages.html", {"messages" : messageList}))
