@@ -6,12 +6,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/subscriptions/conversation/', views.showMailListToAdmin),
-    path('admin/subscriptions/conversation/add', views.addConversation),
-    path('admin/subscriptions/message/<str:mEmail>/', views.showConvToAdmin),
-    path('admin/subscriptions/message/startChat/<str:mEmail>/', views.startChat),
-    path('admin/subscriptions/message/<str:mEmail>/sendMessageFromAdmin', views.sendMessageFromAdmin, name = "message"),
-    path('admin/subscriptions/message/<str:mEmail>/getMessageForAdmin', views.getMessageForAdmin, name = "message"),
+    path('admin/subscriptions/conversation/', views.showConversationsToAdmin),
+    #path('admin/subscriptions/conversation/add', views.addConversation),
+    path('admin/subscriptions/message/<str:mEmail>/', views.messagePage),
+    path('admin/subscriptions/message/<str:mEmail>/getMessages', views.getMessages, name = "message"),
     path('admin/', admin.site.urls),
     path('', include('subscriptions.urls')), # new
     path('accounts/', include('allauth.urls')),  # new

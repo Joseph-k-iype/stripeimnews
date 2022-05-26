@@ -1,8 +1,10 @@
 
+from datetime import datetime
 import json
 from msvcrt import getch
 from pyexpat import model
 from select import select
+from statistics import mode
 from django.contrib.auth.models import User
 from django.db import models
 from ckeditor.fields import RichTextField
@@ -38,19 +40,20 @@ class PostCountHitDetailView(HitCountDetailView):
 
 #send a mail to the user when the article is published
 
-class sendmail(models.Model):
+class Messages(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     message = RichTextField(blank=True,null=True)
     fromAdmin = models.BooleanField(default=True)
     seenByAdmin = models.BooleanField(default=True)
     seenByUser = models.BooleanField(default=True)
+    timeSent = models.DateTimeField(default=datetime.now())
     class Meta:
         verbose_name = 'Mail'
 
 class Conversation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    view = models.BooleanField(default=False) # True if message is not seen by admin
-    loaded = models.BooleanField(default=False) # True if message is not seen by admin
+    seenByUser = models.BooleanField(default=False)
+    seenByAdmin = models.BooleanField(default=False)
     def __str__(self):
         return(self.user.email)
 

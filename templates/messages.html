@@ -38,7 +38,7 @@
   <div class="main" onload="scroll()">
     <div class="container" id="display">
       <div class="chat-log" id="chatLog">
-        {% if admin %}
+        {% if user.is_superuser %}
         {% for item in messages %}
         {% if item.fromAdmin %}
         <div class="chat-log__item chat-log__item--own">
@@ -71,31 +71,30 @@
   <div class="chat-form">
     <div class="container ">
 
-      {% if admin %}
-      <form action="sendMessageFromAdmin" method="post" class="form-horizontal">
+      {% if user.is_superuser %}
+      <form method="post" id="adminMessageForm">
         {% csrf_token %}
         <div class="row">
           <div class="col-sm-10 col-xs-8">
-            <input type="text" class="form-control" id="" name="message" placeholder="Message" />
+            <input type="text" class="form-control" id="adminMessage" name="message" placeholder="Message" />
           </div>
           <div class="col-sm-2 col-xs-4">
             <button type="submit" class="btn btn-success btn-block">Send</button>
           </div>
       </form>
       {% else %}
-      <form action="sendMessage" method="post" class="form-horizontal">
+      <form method="post" id="userMessageForm">
         {% csrf_token %}
         <input hidden="true" name="userEmail" value="{{ user.email }}">
         <div class="row">
           <div class="col-sm-10 col-xs-8">
-            <input type="text" class="form-control" id="" name="message" placeholder="Message" />
+            <input type="text" class="form-control" id="userMessage" name="message" placeholder="Message" />
           </div>
           <div class="col-sm-2 col-xs-4">
             <button type="submit" class="btn btn-success btn-block">Send</button>
           </div>
       </form>
       {% endif %}
-      <form class="form-horizontal">
 
     </div>
     </form>
@@ -105,29 +104,59 @@
   {% endblock %}
 
 </body>
-<script>
-  function scroll() {
-    var objDiv = document.getElementById("chatLog");
-    objDiv.scrollTop = objDiv.scrollHeight;
-  }
 
-</script>
-{% if admin %}
+
+
+
+{% if user.is_superuser %}
 <script>
+  // Sending message from admin
+  $(document).on('submit', '#adminMessageForm', function (e) {
+    console.log("YES");
+    e.preventDefault();
+    $.ajax({
+      type: 'POST',
+      url: '',
+      data:
+      {
+        message: $("#adminMessage").val(),
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+
+      },
+      success: function (response) {
+        if (response.messages.length > 0) {
+            var html = '<div class="chat-log__item chat-log__item--own">' + '<div class="chat-log__message">' + response.messages + '</div>' + '</div>';
+            $('#chatLog').append(html);
+            document.getElementById('adminMessage').innerHTML = "";
+            $(document).ready(function () {
+              $('html, body').animate({
+                scrollTop: $(document).height()
+              }, 'fast');
+            });
+        }
+      }
+    })
+  });
+
+
   $(document).ready(function () {
     setInterval(function () {
       $.ajax({
         type: 'GET',
-        url: "getMessageForAdmin",
+        url: "getMessages",
         success: function (response) {
           if (response.messages.length > 0) {
-
             console.log(response.messages)
             //pass response.messages to html
             for (var i = 0; i < response.messages.length; i++) {
               var message = response.messages[i];
-              var html = '<div class="chat-log__item chat-log__item--own">' + '<div class="chat-log__message">' + message.message + '</div>' + '</div>';
+              var html = '<div class="chat-log__item">' + '<div class="chat-log__message">' + message.message + '</div>' + '</div>';
               $('#chatLog').append(html);
+              $(document).ready(function () {
+                $('html, body').animate({
+                  scrollTop: $(document).height()
+                }, 'fast');
+              });
             }
           }
         },
@@ -138,6 +167,35 @@
 </script>
 {% else %}
 <script>
+  //Sending messages from user
+  $(document).on('submit', '#userMessageForm', function (e) {
+    console.log("YES");
+    e.preventDefault();
+    $.ajax({
+      type: 'POST',
+      url: 'message',
+      data:
+      {
+        message: $("#userMessage").val(),
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+
+      },
+      success: function (response) {
+        if (response.messages.length > 0) {
+            var html = '<div class="chat-log__item chat-log__item--own">' + '<div class="chat-log__message">' + response.messages + '</div>' + '</div>';
+            $('#chatLog').append(html);
+            document.getElementById('userMessage').innerHTML = "";
+            $(document).ready(function () {
+              $('html, body').animate({
+                scrollTop: $(document).height()
+              }, 'fast');
+            });
+        }
+      }
+    })
+  });
+
+  
   $(document).ready(function () {
     setInterval(function () {
       $.ajax({
@@ -148,8 +206,13 @@
             console.log(response.messages)
             for (var i = 0; i < response.messages.length; i++) {
               var message = response.messages[i];
-              var html = '<div class="chat-log__item chat-log__item--own">' + '<div class="chat-log__message">' + message.message + '</div>' + '</div>';
+              var html = '<div class="chat-log__item">' + '<div class="chat-log__message">' + message.message + '</div>' + '</div>';
               $('#chatLog').append(html);
+              $(document).ready(function () {
+                $('html, body').animate({
+                  scrollTop: $(document).height()
+                }, 'fast');
+              });
             }
           }
         },
