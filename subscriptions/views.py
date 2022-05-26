@@ -1,4 +1,6 @@
+from collections import UserList
 import email
+from email import message
 import stripe
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -302,7 +304,11 @@ def messagePage(request, mEmail = ""):
                 i.save()
             return(render(request, "messages.html", {"messages" : messageList}))
     else:
-        userConv = Conversation.objects.filter(user = request.user).get()
+        try:
+            userConv = Conversation.objects.filter(user = request.user).get()
+        except:
+            userConv = Conversation(user = request.user, seenByUser = True, seenByAdmin = True)
+            userConv.save()
         if(request.method == "POST"):
             userConv.seenByAdmin = False
             userConv.save()
@@ -318,3 +324,27 @@ def messagePage(request, mEmail = ""):
                 i.seenByUser = True
                 i.save()
             return(render(request, "messages.html", {"messages" : messageList}))
+
+@login_required
+def newConversation(request):
+    print("NEW CONV CALLED")
+    if(request.user.is_superuser):
+        if(request.method == "POST"):
+            mUser = User.objects.filter(email = request.POST["email"]).get()
+            message = request.POST["message"]
+            # Check if conversation exists 
+            try:
+                userConv = Conversation.objects.filter(user = mUser).get()
+                userConv.seenByUser = False
+            except:
+                userConv = Conversation(user = mUser, seenByAdmin = True, seenByUser = False)
+            finally:
+                userConv.save()
+                newMessage = Messages(user = mUser, message = message, fromAdmin = True, seenByAdmin = True, seenByUser = False, timeSent = datetime.now())
+                newMessage.save()
+                return(redirect("/admin/subscriptions/message/"+mUser.email))
+        else:
+            userList = list(User.objects.all().values())
+            return(render(request, "startchat.html", {'userList' : userList}))
+    else:
+        return(redirect("/"))

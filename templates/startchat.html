@@ -744,9 +744,6 @@
             <div class="content" data-select2-id="select2-data-12-am59">
                 <div class="container-fluid" data-select2-id="select2-data-11-beu1">
                     <section id="content" class="content" data-select2-id="select2-data-content">
-
-
-
                         <div class="row" data-select2-id="select2-data-10-n6sx">
 
 
@@ -767,7 +764,6 @@
                                                     <div class="form-group field-user"
                                                         data-select2-id="select2-data-5-y1lk">
                                                         <div class="row" data-select2-id="select2-data-4-gcfk">
-
                                                             <label class="col-sm-2 text-left" for="id_user">
                                                                 User
                                                                 <span class="text-red">* </span>
@@ -776,37 +772,21 @@
                                                             <select
                                                                 class="select2 select2-container select2-container--default select2-container--below"
                                                                 dir="ltr" data-select2-id="select2-data-1-p5da"
-                                                                style="width: 163.6px;">
+                                                                style="width: 163.6px;" name="email">
                                                                 <span class="selection">
                                                                     {% for user in userList %}
-                                                                    <span
-                                                                        class="select2-selection select2-selection--single"
-                                                                        role="combobox" aria-haspopup="true"
-                                                                        aria-expanded="false" tabindex="0"
-                                                                        aria-disabled="false"
-                                                                        aria-labelledby="select2-id_user-container"
-                                                                        aria-controls="select2-id_user-container">
-
-                                                                      
-                                                                        <span class="select2-selection__rendered"
-                                                                            id="select2-id_user-container"
-                                                                            role="textbox" aria-readonly="true"
-                                                                            title="{{ user.username }}">
-                                                                            {{ user.username }}
-                                                                        </span>
-                                                                        <span class="select2-selection__arrow"
-                                                                            role="presentation"><b
-                                                                                role="presentation"></b>
-                                                                        </span>
-                                                                    </span>
-                                                                </span>
-                                                                {% endfor %}
-                                                                <span
-                                                                    class="dropdown-wrapper"
-                                                                    aria-hidden="true"></span>
+                                                                    <option value="{{ user.email }}">
+                                                                        {{ user.username }}
+                                                                    </option>
+                                                                    {% endfor %}
+                                                                    <span class="dropdown-wrapper"
+                                                                        aria-hidden="true"></span>
                                                             </select>
+                                                          
                                                         </div>
                                                     </div>
+                                                    <input type="richtext" name="message">
+                                                    <input type="submit">
                                                 </div>
                                             </div>
                                         </div>

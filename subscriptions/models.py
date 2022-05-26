@@ -47,6 +47,8 @@ class Messages(models.Model):
     seenByAdmin = models.BooleanField(default=True)
     seenByUser = models.BooleanField(default=True)
     timeSent = models.DateTimeField(default=datetime.now())
+    media = models.BooleanField(default=False)
+    media = models.FileField(upload_to="message_media")
     class Meta:
         verbose_name = 'Mail'
 
