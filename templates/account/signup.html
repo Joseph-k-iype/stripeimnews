@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
-{% with homeUrl="/home"%}
+{% with homeUrl="127.0.0.1:8000/home"%}
 
 <head>
     <meta charset="UTF-8">
@@ -24,6 +24,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
     <!--External CSS-->
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
 </head>
 
 <body>
@@ -34,7 +35,7 @@
     <!--Navbar-->
     <nav class="navbar navbar-expand-sm|md|lg|-xl fixed-top">
         <div class="container-fluid px-lg-5 px-4 py-1">
-            <a class="navbar-brand" href="/">IM World News</a>
+            <a class="navbar-brand" href="./index.html">IM World News</a>
             <ul class="nav desktop_nav">
                 <li class="nav-item">
                     <a class="nav-link" href="#">About Us</a>
@@ -70,13 +71,7 @@
     <!--Background img-->
     <img src="{% static 'img/earth1.jpg' %}" alt="earth img" class="earth_img">
 
-    <!--Left Pane-->
-    <div class="dashboard_left login col-lg-4 col-md-6">
-        <h3>Welcome to IM World News</h3>
-        <h5>Accerlate your business by publishing amazing articles</h5>
-
-        <h1>Sign Up</h1>
-        <p>Already have an account? Then please <a href="/accounts/login/?next=%2Fhome">sign in</a>.</p>
+    <div class="card1">
         {% if form.errors %}
         {% for field in form %}
         {% for error in field.errors %}
@@ -91,6 +86,40 @@
         </div>
         {% endfor %}
         {% endif %}
+
+        <form id="signup_form" method="post" action="/accounts/signup/">
+            {% csrf_token %}
+            <div class="title_card">
+                <h5>Welcome to IM World News</h5>
+                <h6>Accelerate your business by publishing amazing articles</h6>
+            </div>
+            <h2 class="title"> Sign Up</h2>
+
+
+
+
+            <div class="email-login">
+                <label for="email"> <b>Email</b></label>
+                <input type="text" name="email" placeholder="E-mail address" autocomplete="email" id="id_email"
+                    required>
+                <label for="psw"><b>Password</b></label>
+                <input type="password" type="password" name="password1" placeholder="Password"
+                    autocomplete="current-password" id="id_password" required>
+            </div>
+
+            <button class="cta-btn" type="submit">Log In</button>
+            <div style="padding: 10px;text-align: center;">
+                <p>Already have an account? <br>Then please <a href="/accounts/login/?next=%2Fhome">sign in</a>.</p>
+            </div>
+        </form>
+    </div>
+    <!--Left Pane-->
+    <!-- <div class="dashboard_left login col-lg-4 col-md-6">
+        <h3>Welcome to IM World News</h3>
+        <h5>Accerlate your business by publishing amazing articles</h5>
+
+        <h1>Sign Up</h1>
+        <p>Already have an account? Then please <a href="/accounts/login/?next=%2Fhome">sign in</a>.</p>
         <form class="signup" id="signup_form" method="post" action="/accounts/signup/">
             {% csrf_token %}
             <p>
@@ -106,7 +135,7 @@
             <input type="hidden" name="next" value="/accounts/login/?next=%2Fhome">
             <button type="submit">Sign Up »</button>
         </form>
-    </div>
+    </div> -->
 
 
     <script src="{% static 'js/index.js' %}"></script>

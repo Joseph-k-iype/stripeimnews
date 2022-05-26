@@ -1,55 +1,63 @@
+* {
+  background-color: #0a1520;
+}
 body {
-    background-color: #0A1520;
-    
+  background-color: #0a1520;
 }
 .page-header {
-	background: #006A4E;
-	margin: 0;
+  background: #006a4e;
+  margin: 0;
   padding: 20px 0 10px;
-	color: #FFFFFF;
-	position: fixed;
-	width: 100%;
-  z-index: 1
+  color: #ffffff;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
 }
 .main {
-    background-color: #0A1520;
-	padding-top: 70px;
+  background-color: #0a1520;
+  padding-top: 70px;
 }
 
 .chat-log {
-	padding: 40px 0 114px;
-	height: auto;
-	overflow: auto;
+  padding: 40px 0 114px;
+  height: auto;
+  overflow: auto;
 }
 .chat-log__item {
-	background: #fafafa;
-	padding: 10px;
-	margin: 0 auto 20px;
-	max-width: 80%;
-	float: left;
-	border-radius: 4px;
-	box-shadow: 0 1px 2px rgba(0,0,0,.1);
-	clear: both;
+  background: #fafafa;
+  color: #ffffff;
+  padding: 10px;
+  margin: 0 auto 20px;
+  max-width: 80%;
+  float: left;
+  border-radius: 4px;
+  /* box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); */
+  clear: both;
 }
 
 .chat-log__item.chat-log__item--own {
-	float: right;
-	background: #DCF8C6;
-	text-align: right;
+  float: right;
+  background: #dcf8c6;
+  color: #ffffff;
+  text-align: right;
 }
 
+.chat-log__message
+{
+  background: #DCF8C6;
+  color: #000000;
+}
 .chat-form {
-    background-color: #0A1520;
+  background-color: #0a1520;
 
-	padding: 40px 0;
-	position: fixed;
-	bottom: 0;
-	width: 100%;
+  padding: 40px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
 .chat-log__author {
-	margin: 0 auto .5em;
-	font-size: 14px;
-	font-weight: bold;
-	
+  margin: 0 auto 0.5em;
+  font-size: 14px;
+  font-weight: bold;
 }
