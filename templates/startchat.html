@@ -1,0 +1,838 @@
+<html lang="en-us" style="height: auto;" data-select2-id="select2-data-15-eih2">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!--  Prevent admin panel being crawled by search engines -->
+    <meta name="robots" content="none, noarchive">
+
+    <title>Add conversation | IM World News Admin</title>
+
+    <link rel="stylesheet" href="/static/vendor/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/static/vendor/adminlte/css/adminlte.min.css" id="adminlte-css">
+    <link rel="stylesheet" href="/static/vendor/bootswatch/flatly/bootstrap.min.css" id="jazzmin-theme">
+    <link rel="stylesheet" href="/static/jazzmin/css/main.css">
+    <link rel="shortcut icon" href="/static/vendor/adminlte/img/AdminLTELogo.png" type="image/png">
+    <link rel="icon" href="/static/vendor/adminlte/img/AdminLTELogo.png" sizes="32x32" type="image/png">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="/static/vendor/select2/css/select2.min.css">
+    <script type="text/javascript" src="/admin/jsi18n/"></script>
+    <script src="/static/admin/js/vendor/jquery/jquery.js"></script>
+    <script src="/static/admin/js/jquery.init.js"></script>
+    <script src="/static/admin/js/core.js"></script>
+    <script src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+    <script src="/static/admin/js/actions.js"></script>
+    <script src="/static/admin/js/urlify.js"></script>
+    <script src="/static/admin/js/prepopulate.js"></script>
+    <script src="/static/admin/js/vendor/xregexp/xregexp.js"></script>
+    <script src="/static/admin/js/vendor/jquery/jquery.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/vendor/adminlte/js/adminlte.min.js"></script>
+    <script src="/static/jazzmin/js/main.js"></script>
+    <script type="text/javascript" src="/static/vendor/select2/js/select2.min.js"></script>
+    <script type="text/javascript" src="/static/jazzmin/js/change_form.js"></script>
+
+</head>
+
+<body
+    class="sidebar-mini app-subscriptions model-conversation change-form accent-primary theme-flatly sidebar-closed sidebar-collapse"
+    data-admin-utc-offset="0" style="height: auto;" data-select2-id="select2-data-14-sgou">
+
+    <div class="wrapper" data-select2-id="select2-data-13-icek">
+
+
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light" id="jazzy-navbar">
+            <ul class="navbar-nav">
+
+
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+
+
+
+
+            </ul>
+
+
+            <form action="/admin/auth/user/" method="GET" class="form-inline ml-3">
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" name="q" type="search" placeholder="Search Users..."
+                        aria-label="Search Users...">
+                    <div class="input-group-append">
+                        <button class="btn btn-navbar" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link btn" data-toggle="dropdown" href="#" title="Choose language">
+                        <i class="fas fa-globe" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left" id="jazzy-languagemenu">
+                        <form action="/i18n/setlang/" method="post">
+                            <input type="hidden" name="csrfmiddlewaretoken"
+                                value="xQ9YiTQ9PIcvhY185ymzjlgna3v6ulkMBetrn7IoqRIDJEh3GJ9jRsszIlgoi0em">
+                            <input name="next" type="hidden" value="/admin/subscriptions/conversation/add/">
+
+                            <button type="submit" name="language" value="af" class="dropdown-item " lang="af">
+                                Afrikaans
+                            </button>
+
+                            <button type="submit" name="language" value="ar" class="dropdown-item " lang="ar">
+                                العربيّة
+                            </button>
+
+                            <button type="submit" name="language" value="ar-dz" class="dropdown-item " lang="ar-dz">
+                                العربية الجزائرية
+                            </button>
+
+                            <button type="submit" name="language" value="ast" class="dropdown-item " lang="ast">
+                                Asturianu
+                            </button>
+
+                            <button type="submit" name="language" value="az" class="dropdown-item " lang="az">
+                                Azərbaycanca
+                            </button>
+
+                            <button type="submit" name="language" value="bg" class="dropdown-item " lang="bg">
+                                Български
+                            </button>
+
+                            <button type="submit" name="language" value="be" class="dropdown-item " lang="be">
+                                Беларуская
+                            </button>
+
+                            <button type="submit" name="language" value="bn" class="dropdown-item " lang="bn">
+                                বাংলা
+                            </button>
+
+                            <button type="submit" name="language" value="br" class="dropdown-item " lang="br">
+                                Brezhoneg
+                            </button>
+
+                            <button type="submit" name="language" value="bs" class="dropdown-item " lang="bs">
+                                Bosanski
+                            </button>
+
+                            <button type="submit" name="language" value="ca" class="dropdown-item " lang="ca">
+                                Català
+                            </button>
+
+                            <button type="submit" name="language" value="cs" class="dropdown-item " lang="cs">
+                                Česky
+                            </button>
+
+                            <button type="submit" name="language" value="cy" class="dropdown-item " lang="cy">
+                                Cymraeg
+                            </button>
+
+                            <button type="submit" name="language" value="da" class="dropdown-item " lang="da">
+                                Dansk
+                            </button>
+
+                            <button type="submit" name="language" value="de" class="dropdown-item " lang="de">
+                                Deutsch
+                            </button>
+
+                            <button type="submit" name="language" value="dsb" class="dropdown-item " lang="dsb">
+                                Dolnoserbski
+                            </button>
+
+                            <button type="submit" name="language" value="el" class="dropdown-item " lang="el">
+                                Ελληνικά
+                            </button>
+
+                            <button type="submit" name="language" value="en" class="dropdown-item " lang="en">
+                                English
+                            </button>
+
+                            <button type="submit" name="language" value="en-au" class="dropdown-item " lang="en-au">
+                                Australian English
+                            </button>
+
+                            <button type="submit" name="language" value="en-gb" class="dropdown-item " lang="en-gb">
+                                British English
+                            </button>
+
+                            <button type="submit" name="language" value="eo" class="dropdown-item " lang="eo">
+                                Esperanto
+                            </button>
+
+                            <button type="submit" name="language" value="es" class="dropdown-item " lang="es">
+                                Español
+                            </button>
+
+                            <button type="submit" name="language" value="es-ar" class="dropdown-item " lang="es-ar">
+                                Español De Argentina
+                            </button>
+
+                            <button type="submit" name="language" value="es-co" class="dropdown-item " lang="es-co">
+                                Español De Colombia
+                            </button>
+
+                            <button type="submit" name="language" value="es-mx" class="dropdown-item " lang="es-mx">
+                                Español De Mexico
+                            </button>
+
+                            <button type="submit" name="language" value="es-ni" class="dropdown-item " lang="es-ni">
+                                Español De Nicaragua
+                            </button>
+
+                            <button type="submit" name="language" value="es-ve" class="dropdown-item " lang="es-ve">
+                                Español De Venezuela
+                            </button>
+
+                            <button type="submit" name="language" value="et" class="dropdown-item " lang="et">
+                                Eesti
+                            </button>
+
+                            <button type="submit" name="language" value="eu" class="dropdown-item " lang="eu">
+                                Basque
+                            </button>
+
+                            <button type="submit" name="language" value="fa" class="dropdown-item " lang="fa">
+                                فارسی
+                            </button>
+
+                            <button type="submit" name="language" value="fi" class="dropdown-item " lang="fi">
+                                Suomi
+                            </button>
+
+                            <button type="submit" name="language" value="fr" class="dropdown-item " lang="fr">
+                                Français
+                            </button>
+
+                            <button type="submit" name="language" value="fy" class="dropdown-item " lang="fy">
+                                Frysk
+                            </button>
+
+                            <button type="submit" name="language" value="ga" class="dropdown-item " lang="ga">
+                                Gaeilge
+                            </button>
+
+                            <button type="submit" name="language" value="gd" class="dropdown-item " lang="gd">
+                                Gàidhlig
+                            </button>
+
+                            <button type="submit" name="language" value="gl" class="dropdown-item " lang="gl">
+                                Galego
+                            </button>
+
+                            <button type="submit" name="language" value="he" class="dropdown-item " lang="he">
+                                עברית
+                            </button>
+
+                            <button type="submit" name="language" value="hi" class="dropdown-item " lang="hi">
+                                हिंदी
+                            </button>
+
+                            <button type="submit" name="language" value="hr" class="dropdown-item " lang="hr">
+                                Hrvatski
+                            </button>
+
+                            <button type="submit" name="language" value="hsb" class="dropdown-item " lang="hsb">
+                                Hornjoserbsce
+                            </button>
+
+                            <button type="submit" name="language" value="hu" class="dropdown-item " lang="hu">
+                                Magyar
+                            </button>
+
+                            <button type="submit" name="language" value="hy" class="dropdown-item " lang="hy">
+                                Հայերեն
+                            </button>
+
+                            <button type="submit" name="language" value="ia" class="dropdown-item " lang="ia">
+                                Interlingua
+                            </button>
+
+                            <button type="submit" name="language" value="id" class="dropdown-item " lang="id">
+                                Bahasa Indonesia
+                            </button>
+
+                            <button type="submit" name="language" value="ig" class="dropdown-item " lang="ig">
+                                Asụsụ Ìgbò
+                            </button>
+
+                            <button type="submit" name="language" value="io" class="dropdown-item " lang="io">
+                                Ido
+                            </button>
+
+                            <button type="submit" name="language" value="is" class="dropdown-item " lang="is">
+                                Íslenska
+                            </button>
+
+                            <button type="submit" name="language" value="it" class="dropdown-item " lang="it">
+                                Italiano
+                            </button>
+
+                            <button type="submit" name="language" value="ja" class="dropdown-item " lang="ja">
+                                日本語
+                            </button>
+
+                            <button type="submit" name="language" value="ka" class="dropdown-item " lang="ka">
+                                ქართული
+                            </button>
+
+                            <button type="submit" name="language" value="kab" class="dropdown-item " lang="kab">
+                                Taqbaylit
+                            </button>
+
+                            <button type="submit" name="language" value="kk" class="dropdown-item " lang="kk">
+                                Қазақ
+                            </button>
+
+                            <button type="submit" name="language" value="km" class="dropdown-item " lang="km">
+                                Khmer
+                            </button>
+
+                            <button type="submit" name="language" value="kn" class="dropdown-item " lang="kn">
+                                Kannada
+                            </button>
+
+                            <button type="submit" name="language" value="ko" class="dropdown-item " lang="ko">
+                                한국어
+                            </button>
+
+                            <button type="submit" name="language" value="ky" class="dropdown-item " lang="ky">
+                                Кыргызча
+                            </button>
+
+                            <button type="submit" name="language" value="lb" class="dropdown-item " lang="lb">
+                                Lëtzebuergesch
+                            </button>
+
+                            <button type="submit" name="language" value="lt" class="dropdown-item " lang="lt">
+                                Lietuviškai
+                            </button>
+
+                            <button type="submit" name="language" value="lv" class="dropdown-item " lang="lv">
+                                Latviešu
+                            </button>
+
+                            <button type="submit" name="language" value="mk" class="dropdown-item " lang="mk">
+                                Македонски
+                            </button>
+
+                            <button type="submit" name="language" value="ml" class="dropdown-item " lang="ml">
+                                മലയാളം
+                            </button>
+
+                            <button type="submit" name="language" value="mn" class="dropdown-item " lang="mn">
+                                Mongolian
+                            </button>
+
+                            <button type="submit" name="language" value="mr" class="dropdown-item " lang="mr">
+                                मराठी
+                            </button>
+
+                            <button type="submit" name="language" value="ms" class="dropdown-item " lang="ms">
+                                Bahasa Melayu
+                            </button>
+
+                            <button type="submit" name="language" value="my" class="dropdown-item " lang="my">
+                                မြန်မာဘာသာ
+                            </button>
+
+                            <button type="submit" name="language" value="nb" class="dropdown-item " lang="nb">
+                                Norsk (Bokmål)
+                            </button>
+
+                            <button type="submit" name="language" value="ne" class="dropdown-item " lang="ne">
+                                नेपाली
+                            </button>
+
+                            <button type="submit" name="language" value="nl" class="dropdown-item " lang="nl">
+                                Nederlands
+                            </button>
+
+                            <button type="submit" name="language" value="nn" class="dropdown-item " lang="nn">
+                                Norsk (Nynorsk)
+                            </button>
+
+                            <button type="submit" name="language" value="os" class="dropdown-item " lang="os">
+                                Ирон
+                            </button>
+
+                            <button type="submit" name="language" value="pa" class="dropdown-item " lang="pa">
+                                Punjabi
+                            </button>
+
+                            <button type="submit" name="language" value="pl" class="dropdown-item " lang="pl">
+                                Polski
+                            </button>
+
+                            <button type="submit" name="language" value="pt" class="dropdown-item " lang="pt">
+                                Português
+                            </button>
+
+                            <button type="submit" name="language" value="pt-br" class="dropdown-item " lang="pt-br">
+                                Português Brasileiro
+                            </button>
+
+                            <button type="submit" name="language" value="ro" class="dropdown-item " lang="ro">
+                                Română
+                            </button>
+
+                            <button type="submit" name="language" value="ru" class="dropdown-item " lang="ru">
+                                Русский
+                            </button>
+
+                            <button type="submit" name="language" value="sk" class="dropdown-item " lang="sk">
+                                Slovensky
+                            </button>
+
+                            <button type="submit" name="language" value="sl" class="dropdown-item " lang="sl">
+                                Slovenščina
+                            </button>
+
+                            <button type="submit" name="language" value="sq" class="dropdown-item " lang="sq">
+                                Shqip
+                            </button>
+
+                            <button type="submit" name="language" value="sr" class="dropdown-item " lang="sr">
+                                Српски
+                            </button>
+
+                            <button type="submit" name="language" value="sr-latn" class="dropdown-item " lang="sr-latn">
+                                Srpski (Latinica)
+                            </button>
+
+                            <button type="submit" name="language" value="sv" class="dropdown-item " lang="sv">
+                                Svenska
+                            </button>
+
+                            <button type="submit" name="language" value="sw" class="dropdown-item " lang="sw">
+                                Kiswahili
+                            </button>
+
+                            <button type="submit" name="language" value="ta" class="dropdown-item " lang="ta">
+                                தமிழ்
+                            </button>
+
+                            <button type="submit" name="language" value="te" class="dropdown-item " lang="te">
+                                తెలుగు
+                            </button>
+
+                            <button type="submit" name="language" value="tg" class="dropdown-item " lang="tg">
+                                Тоҷикӣ
+                            </button>
+
+                            <button type="submit" name="language" value="th" class="dropdown-item " lang="th">
+                                ภาษาไทย
+                            </button>
+
+                            <button type="submit" name="language" value="tk" class="dropdown-item " lang="tk">
+                                Türkmençe
+                            </button>
+
+                            <button type="submit" name="language" value="tr" class="dropdown-item " lang="tr">
+                                Türkçe
+                            </button>
+
+                            <button type="submit" name="language" value="tt" class="dropdown-item " lang="tt">
+                                Татарча
+                            </button>
+
+                            <button type="submit" name="language" value="udm" class="dropdown-item " lang="udm">
+                                Удмурт
+                            </button>
+
+                            <button type="submit" name="language" value="uk" class="dropdown-item " lang="uk">
+                                Українська
+                            </button>
+
+                            <button type="submit" name="language" value="ur" class="dropdown-item " lang="ur">
+                                اردو
+                            </button>
+
+                            <button type="submit" name="language" value="uz" class="dropdown-item " lang="uz">
+                                OʻZbek Tili
+                            </button>
+
+                            <button type="submit" name="language" value="vi" class="dropdown-item " lang="vi">
+                                TiếNg ViệT
+                            </button>
+
+                            <button type="submit" name="language" value="zh-hans" class="dropdown-item " lang="zh-hans">
+                                简体中文
+                            </button>
+
+                            <button type="submit" name="language" value="zh-hant" class="dropdown-item " lang="zh-hant">
+                                繁體中文
+                            </button>
+
+                        </form>
+                    </div>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link btn" data-toggle="dropdown" href="#" title="a">
+                        <i class="far fa-user" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left" id="jazzy-usermenu">
+                        <span class="dropdown-header">Account</span>
+                        <div class="dropdown-divider"></div>
+                        <a href="/admin/password_change/" class="dropdown-item">
+                            <i class="fas fa-key mr-2"></i> Change password
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="/admin/logout/" class="dropdown-item">
+                            <i class="fas fa-users mr-2"></i> Log out
+                        </a>
+
+
+                        <div class="dropdown-divider"></div>
+
+                        <a href="/admin/auth/user/1/change/" class="dropdown-item dropdown-footer">See Profile</a>
+
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <aside class="main-sidebar elevation-4 sidebar-dark-primary" id="jazzy-sidebar">
+            <a href="/admin/" class="brand-link " id="jazzy-logo">
+                <img src="/static/vendor/adminlte/img/AdminLTELogo.png" alt="IM World News Logo"
+                    class="img-circle brand-image elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">IM World News</span>
+            </a>
+
+            <div class="sidebar">
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+
+                        <i class="fas fa-inverse user-profile fa-user-circle"></i>
+
+                    </div>
+                    <div class="info">
+
+                        <a href="/admin/auth/user/1/change/" class="d-block">a</a>
+
+                    </div>
+                </div>
+
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column " data-widget="treeview" role="menu"
+                        data-collapsible="false">
+
+                        <li class="nav-item">
+                            <a href="/admin/" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+
+
+
+                        <li class="nav-header">Accounts</li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/account/emailaddress/" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Email addresses</p>
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-header">Authentication and Authorization</li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/auth/group/" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>Groups</p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/auth/user/" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Users</p>
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-header">Hitcount</li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/hitcount/blacklistip/" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Blacklisted IPs</p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/hitcount/blacklistuseragent/" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Blacklisted User Agents</p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/hitcount/hitcount/" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Hit counts</p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/hitcount/hit/" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Hits</p>
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-header">Sites</li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/sites/site/" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Sites</p>
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-header">Social Accounts</li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/socialaccount/socialaccount/" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Social accounts</p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/socialaccount/socialtoken/" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Social application tokens</p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/socialaccount/socialapp/" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Social applications</p>
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-header">Subscriptions</li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/subscriptions/formforsubmit/" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Articles</p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/subscriptions/conversation/" class="nav-link active">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Conversations</p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/subscriptions/ipaddress/" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Ip addresss</p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/subscriptions/sendmail/" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Mails</p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/subscriptions/stripecustomer/" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Stripe customers</p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item">
+
+                            <a href="/admin/subscriptions/tasksforoperations/" class="nav-link">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>Tasks</p>
+                            </a>
+
+                        </li>
+
+
+
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <div class="content-wrapper" style="min-height: 1663.2px;">
+
+
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-auto col-sm-3">
+                            <h1 class="m-0"> Conversations </h1>
+                        </div>
+                        <div class="col-auto col-sm-9">
+
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="/admin/"><i class="fa fa-tachometer-alt"></i>
+                                        Home</a></li>
+                                <li class="breadcrumb-item"><a href="/admin/subscriptions/">Subscriptions</a></li>
+                                <li class="breadcrumb-item">
+
+                                    <a href="/admin/subscriptions/conversation/" class="active">Conversations</a>
+
+                                </li>
+                                <li class="breadcrumb-item active">
+
+                                    Add conversation
+
+                                </li>
+                            </ol>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="content" data-select2-id="select2-data-12-am59">
+                <div class="container-fluid" data-select2-id="select2-data-11-beu1">
+                    <section id="content" class="content" data-select2-id="select2-data-content">
+
+
+
+                        <div class="row" data-select2-id="select2-data-10-n6sx">
+
+
+                            <div id="content-main" class="col-12" data-select2-id="select2-data-content-main">
+                                <form action="" method="post" id="conversation_form" novalidate=""
+                                    data-select2-id="select2-data-conversation_form">
+                                    {% csrf_token %}
+                                    <div class="row" data-select2-id="select2-data-9-o23b">
+                                        <div class="col-12 col-lg-9" data-select2-id="select2-data-8-bqni">
+                                            <div class="card card-primary card-outline"
+                                                data-select2-id="select2-data-7-v9yu">
+                                                <div class="card-header">
+                                                    <div class="card-title">
+                                                        Add conversation
+                                                    </div>
+                                                </div>
+                                                <div class="card-body" data-select2-id="select2-data-6-aaqs">
+                                                    <div class="form-group field-user"
+                                                        data-select2-id="select2-data-5-y1lk">
+                                                        <div class="row" data-select2-id="select2-data-4-gcfk">
+
+                                                            <label class="col-sm-2 text-left" for="id_user">
+                                                                User
+                                                                <span class="text-red">* </span>
+                                                            </label>
+
+                                                            <select
+                                                                class="select2 select2-container select2-container--default select2-container--below"
+                                                                dir="ltr" data-select2-id="select2-data-1-p5da"
+                                                                style="width: 163.6px;">
+                                                                <span class="selection">
+                                                                    {% for user in userList %}
+                                                                    <span
+                                                                        class="select2-selection select2-selection--single"
+                                                                        role="combobox" aria-haspopup="true"
+                                                                        aria-expanded="false" tabindex="0"
+                                                                        aria-disabled="false"
+                                                                        aria-labelledby="select2-id_user-container"
+                                                                        aria-controls="select2-id_user-container">
+
+                                                                      
+                                                                        <span class="select2-selection__rendered"
+                                                                            id="select2-id_user-container"
+                                                                            role="textbox" aria-readonly="true"
+                                                                            title="{{ user.username }}">
+                                                                            {{ user.username }}
+                                                                        </span>
+                                                                        <span class="select2-selection__arrow"
+                                                                            role="presentation"><b
+                                                                                role="presentation"></b>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                                {% endfor %}
+                                                                <span
+                                                                    class="dropdown-wrapper"
+                                                                    aria-hidden="true"></span>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            </div>
+                            </form>
+                        </div>
+
+
+                </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <footer class="main-footer ">
+        <div class="float-right d-none d-sm-inline">
+            <b>Jazzmin version</b> 2.5.0
+        </div>
+
+        <strong>Copyright © 2022 IM World News.</strong> All rights reserved.
+
+    </footer>
+    <div id="sidebar-overlay"></div>
+    </div>
+
+</body>
+
+</html>

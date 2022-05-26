@@ -142,8 +142,9 @@ def sendMessage(request):
 def showMailListToAdmin(request):
     if(request.user.is_superuser):
         convList = list(Conversation.objects.all().order_by('view'))
-        print(convList)
-        return(render(request, "mail_list.html", {'conversations' : convList}))
+        userList = list(User.objects.all())
+        print(userList)
+        return(render(request, "mail_list.html", {'conversations' : convList, 'users' : userList}))
     else:
         return(redirect('/'))
 
@@ -152,15 +153,37 @@ def showConvToAdmin(request, mEmail):
     if(request.user.is_superuser):
         mUser = User.objects.filter(email = mEmail).get()  
         try:
-             userConv = Conversation.objects.filter(user = request.user).get()
+             userConv = Conversation.objects.filter(user = mUser).get()
         except:
-             userConv = Conversation(user = request.user, view = False)
+             userConv = Conversation(user = mUser, view = False)
         finally:
              userConv.view = False
              userConv.save()
         print(mUser)
         messageList = sendmail.objects.filter(user = mUser)
         return(render(request, "messages.html",{'messages' : messageList, 'admin' : True}))
+    else:
+        return(redirect('/'))
+
+
+@login_required
+def addConversation(request):
+    if(request.user.is_superuser):
+        userList = User.objects.all()
+        return(render(request, "startchat.html", {'userList' : userList}))
+
+@login_required
+def startChat(request, mEmail):
+    if(request.user.is_superuser):
+        mUser = User.objects.filter(email = mEmail).get()   
+        try:
+            userConv = Conversation.objects.filter(user = mUser).get()
+        except:
+            userConv = Conversation(user = mUser, view = False)
+        finally:
+            userConv.view = False
+            userConv.save()
+            return(redirect("/admin/subscriptions/message/"+mEmail+"/"))
     else:
         return(redirect('/'))
 
