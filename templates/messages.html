@@ -72,7 +72,7 @@
     <div class="container ">
 
       {% if user.is_superuser %}
-      <form method="post"  enctype="multipart/form-data" id="adminMessageForm">
+      <form method="post" enctype="multipart/form-data" id="adminMessageForm">
         {% csrf_token %}
         <div class="row">
           <div class="col-sm-10 col-xs-8">
@@ -112,18 +112,17 @@
 <script>
   // Sending message from admin
   $(document).on('submit', '#adminMessageForm', function (e) {
-    console.log("YES");
-    e.preventDefault();
-    $.ajax({
-      type: 'POST',
-      url: '',
-      data:
-      {
-        message: $("#adminMessage").val(),
-        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-      },
-      success: function (response) {
-        if (response.messages.length > 0) {
+      e.preventDefault();
+      $.ajax({
+        type: 'POST',
+        url: '',
+        data:
+        {
+          message: $("#adminMessage").val(),
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function (response) {
+          if (response.messages.length > 0) {
             var html = '<div class="chat-log__item chat-log__item--own">' + '<div class="chat-log__message">' + response.messages + '</div>' + '</div>';
             $('#chatLog').append(html);
             document.getElementById('adminMessage').innerHTML = "";
@@ -132,9 +131,10 @@
                 scrollTop: $(document).height()
               }, 'fast');
             });
+          }
         }
-      }
-    })
+      })
+    
   });
 
 
@@ -168,19 +168,19 @@
 <script>
   //Sending messages from user
   $(document).on('submit', '#userMessageForm', function (e) {
-    console.log("YES");
-    e.preventDefault();
-    $.ajax({
-      type: 'POST',
-      url: 'message',
-      data:
-      {
-        message: $("#userMessage").val(),
-        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+      console.log("YES");
+      e.preventDefault();
+      $.ajax({
+        type: 'POST',
+        url: 'message',
+        data:
+        {
+          message: $("#userMessage").val(),
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
 
-      },
-      success: function (response) {
-        if (response.messages.length > 0) {
+        },
+        success: function (response) {
+          if (response.messages.length > 0) {
             var html = '<div class="chat-log__item chat-log__item--own">' + '<div class="chat-log__message">' + response.messages + '</div>' + '</div>';
             $('#chatLog').append(html);
             document.getElementById('userMessage').innerHTML = "";
@@ -189,12 +189,12 @@
                 scrollTop: $(document).height()
               }, 'fast');
             });
+          }
         }
-      }
-    })
+      })
   });
 
-  
+
   $(document).ready(function () {
     setInterval(function () {
       $.ajax({

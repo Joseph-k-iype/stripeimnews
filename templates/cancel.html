@@ -15,7 +15,7 @@
     <div class="container mt-5">
       <p>Subscription was not successful please try again.</p>
       <p>Redirecting....</p>
-      {% with url="http://127.0.0.1:8000/postform"%}
+      {% with url="/"%}
       <meta http-equiv = "refresh" content = "2; url = {{url}}" />
       {% endwith %}
     </div>
