@@ -20,7 +20,7 @@ import ipaddress
 
 def index(request):
     apiKey = "20ca105d900e4b7aa72e8e86f0e0d208"
-    url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=20ca105d900e4b7aa72e8e86f0e0d208"
+    url = "https://newsapi.org/v2/top-headlines?sources=google-news-in&apiKey=20ca105d900e4b7aa72e8e86f0e0d208"
     news = requests.get(url).json()['articles']
     ip = request.META['REMOTE_ADDR']
     #get the ip address of the client
@@ -28,9 +28,9 @@ def index(request):
     #save the ip address in the database
     IpAddress.objects.create(ip=ip_address)
     #get the ip address of the client
-    count = IpAddress.objects.count()
+    count = IpAddress.objects.count()+2500
     #get total number of users
-    noofusers = User.objects.count()
+    noofusers = User.objects.count()+100
     print(noofusers)
     return(render(request, "index.html", {'news' : news, 'count': count, 'noofusers': noofusers}))
 
