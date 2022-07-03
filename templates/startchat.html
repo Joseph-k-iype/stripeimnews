@@ -782,7 +782,7 @@
                                                                     <span class="dropdown-wrapper"
                                                                         aria-hidden="true"></span>
                                                             </select>
-                                                          
+
                                                         </div>
                                                     </div>
                                                     <input type="richtext" name="message">
@@ -791,9 +791,56 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                </form>
                             </div>
-                            </form>
+
+                            <div id="content-main" class="col-12" data-select2-id="select2-data-content-main">
+                                <form action="" method="post" id="conversation_form" novalidate=""
+                                    data-select2-id="select2-data-conversation_form">
+                                    {% csrf_token %}
+                                    <div class="row" data-select2-id="select2-data-9-o23b">
+                                        <div class="col-12 col-lg-9" data-select2-id="select2-data-8-bqni">
+                                            <div class="card card-primary card-outline"
+                                                data-select2-id="select2-data-7-v9yu">
+                                                <div class="card-header">
+                                                    <div class="card-title">
+                                                        Add conversation
+                                                    </div>
+                                                </div>
+                                                <div class="card-body" data-select2-id="select2-data-6-aaqs">
+                                                    <div class="form-group field-user"
+                                                        data-select2-id="select2-data-5-y1lk">
+                                                        <div class="row" data-select2-id="select2-data-4-gcfk">
+                                                            <label class="col-sm-2 text-left" for="id_user">
+                                                                Staff
+                                                                <span class="text-red">* </span>
+                                                            </label>
+
+                                                            <select
+                                                                class="select2 select2-container select2-container--default select2-container--below"
+                                                                dir="ltr" data-select2-id="select2-data-1-p5da"
+                                                                style="width: 163.6px;" name="email">
+                                                                <span class="selection">
+                                                                    {% for user in staffList %}
+                                                                    <option value="{{ user.email }}">
+                                                                        {{ user.username }}
+                                                                    </option>
+                                                                    {% endfor %}
+                                                                    <span class="dropdown-wrapper"
+                                                                        aria-hidden="true"></span>
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
+                                                    <input type="richtext" name="message">
+                                                    <input type="submit">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
                         </div>
 
 

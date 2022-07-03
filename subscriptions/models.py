@@ -85,6 +85,7 @@ class tasksforoperations(models.Model):
     task = RichTextField(max_length = 255)
     published = models.BooleanField(default=False, verbose_name='Status')
     proof = models.ImageField(upload_to='proofs/',blank=True,null=True)
+    commentbyoperator = RichTextField(blank=True,null=True)
     #filter only staff
     def __str__(self):
         return self.user.username

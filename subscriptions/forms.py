@@ -55,4 +55,15 @@ class submitform(forms.ModelForm):
             
         }
 
-        
+
+
+class tasksforoperationsform(forms.ModelForm):
+    class Meta:
+        model = tasksforoperations
+        fields = ['proof', 'commentbyoperator']
+        commentbyoperator = forms.CharField(widget = CKEditorWidget())
+        proof = forms.FileField(widget = forms.ClearableFileInput(attrs={'multiple': True}))
+        # widgets = {
+        #     'proof': forms.FileInput(attrs={'class': 'form-control-file'}),
+        #     'commentbyoperator': CKEditorWidget(),
+        # }

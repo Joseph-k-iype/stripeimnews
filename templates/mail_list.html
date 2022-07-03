@@ -397,14 +397,26 @@
                                                     </div>
                                                     <hr />
                                                 </div>
+                                                <h6>User conversations</h6>
                                                 <div>
-                                                    {% for item in conversations %}
+                                                    
+                                                    {% for item in userConv %}
+                                                    <br>
                                                     <a href="/admin/subscriptions/message/{{ item.user.email }}">
                                                         {{ item.user.email }}
                                                     </a>
-                                                    <br>
                                                     {% endfor %}
                                                 </div>
+                                                <br>
+                                            </div>
+                                            <h6>Staff conversations</h6>
+                                            <div>
+                                                {% for item in staffConv %}
+                                                <a href="/admin/subscriptions/message/{{ item.user.email }}">
+                                                    {{ item.user.email }}
+                                                </a>
+                                                <br>
+                                                {% endfor %}
                                             </div>
 
                                     

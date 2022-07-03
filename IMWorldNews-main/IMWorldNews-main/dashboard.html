@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <!--Google Icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--GSAP-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <!--Locomotive Scroll-->
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.3/dist/locomotive-scroll.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.3/dist/locomotive-scroll.min.css">
+    <!--External CSS-->
+    <link rel="stylesheet" href="./css/dashboard.css">
+</head>
+<body>
+
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-sm|md|lg|-xl fixed-top">
+          <div class="container-fluid px-lg-5 px-4 py-1">
+            <a class="navbar-brand" href="./index.html">IM World News</a>
+            <ul class="nav desktop_nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Pricing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a id="profile" class="btn yellow_btn" href="#" role="button">Profile</a>
+                </li>
+            </ul>
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="material-icons" style="color:#ffffff; font-size: 24px;">menu</span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./login.html">Logout</a>
+                    </li>
+                </ul>
+            </div>
+      </div>
+    </nav>
+
+    <div class="d-flex">
+        <!--Left Pane-->
+        <div class="dashboard_left col-lg-2 col-md-3 col-4 d-sm-flex d-none">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Create Articles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Your Articles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Messages</a>
+                </li>
+            </ul>
+            <a id="logout" class="btn yellow_btn" href="./login.html" role="button">Logout</a>
+        </div>
+
+        <!--Right Pane-->
+        <div class="content_wrapper col" data-scroll-container>
+            <h2>Dashboard</h2>
+            <div class="content_grid">
+                <div class="dashboard_card">
+                    <div class="dashboard_card_img">
+                        <img src="./img/img1.jpg" alt="article img">
+                    </div>
+                    <h4 class="card-title">Your Article</h4>
+                </div>
+                <div class="dashboard_card">
+                    <div class="dashboard_card_img">
+                        <img src="./img/img1.jpg" alt="article img">
+                    </div>
+                    <h4 class="card-title">Create Article</h4>
+                </div>
+                <div class="dashboard_card">
+                    <div class="dashboard_card_img">
+                        <img src="./img/img1.jpg" alt="article img">
+                    </div>
+                    <h4 class="card-title">Messages</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/index.js"></script>
+</body>
+</html>

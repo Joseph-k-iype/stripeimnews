@@ -140,44 +140,45 @@
             </div>
         </div>
 
-        
+
         {% else %}
         <div class="content_wrapper col" data-scroll-container>
-            <h2>Dashboard</h2>
+            <h2>Your Tasks</h2>
+
             <div class="content_grid">
-                <!-- <a class="dashboard_card" href="/payment_info">
-                    <div class="dashboard_card_img">
-                        <img src="{% static 'img/img1.jpg' %}" alt="article img">
-                    </div>
-                    <h4 class="card-title">Your Article</h4>
-                </a>
 
-                <a class="dashboard_card" href="payment_info">
-                    <div class="dashboard_card_img">
-                        <img src="{% static 'img/img1.jpg' %}" alt="article img">
-                    </div>
-                    <h4 class="card-title">Create Article</h4>
-                </a>
+                <ul class="list-group" style="width: 100%; background: #0D1C2C;">
 
+                    <li class="list-group-item list-group-item-action active" style="background: #0D1C2C;">
 
-                <a class="dashboard_card" href="/message">
-                    <div class="dashboard_card_img">
-                        <img src="{% static 'img/img1.jpg' %}" alt="article img">
-                    </div>
-                    <h4 class="card-title">Messages</h4>
-                </a> -->
-                <h3>Your Tasks</h3>
-                <br>
-                <p>
-                    <p>
                         <!--show only details of the selected task-->
+
                         {{ task.task |safe }}
+
+                    </li>
+                </ul>
+                
+                <p style = "margin-top: 3%;">
+                    Submit your task details for approval.
+                    <div class="container">
+                <div class = "row">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.media }}
+
+                        {{ form.as_p }}
+                        <button type="submit">Upload</button>
+                      </form>
                     
-                    </p>
+                </div>
                 </p>
             </div>
+            </div>
         </div>
-        
+
+
+
+
 
         {% endif %}
     </div>

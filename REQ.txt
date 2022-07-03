@@ -1,4 +1,29 @@
-index.html-> sign in form -> dashboard -> click on create go to home -> stripe ->
--> on success || -> go to step-2 -> after submit -> go to dashboard ->
--> your article -> list all the articles
-message -> list all the messages from admin-> on click detailed view view should come -> n number of reply to a mail
+
+ 1) Login and register page error messages : 
+    -> incorrect password and all, messages need to be displayed nicely 
+       login.html line 76-91
+       signup.html line 75 - 87
+
+ 2) Message Page UI : Fix colors for messages from other person
+
+ 3) mail_list and startchat : Fix color and Seperate column for user annd staff 
+    -> Currently in white background. Fix it to match with the rest of the admin UI : startchat.html and mail_list.html
+    -> Seperate list of users and conversations are made to make it convinient. Display them properly.
+       startchat.html : line 751-852
+       mail_list.html : Line 400-420
+
+ 4) Schedule in postform and other validations + Prev Image 
+    -> Schedule picker has no validations
+    -> Image picker is not visible (you know it's there only if you know)
+
+ 5) About us - Pricing - Contact Us 
+    -> Fill with content
+    -> Pricing page looks somewhat odd with single item
+
+ 6) Images in user dashboard
+    -> Background images for "Messages", "Publish article", "Your articles" need to be removed or replaced
+ 
+ 7) Staff dashboard changes
+    -> remove Publish article, your article and all
+    -> Image added from CKEditor widget dont align properly in the view. 
+       Create a task from admin put one image in and view it from the staff dashboard. 

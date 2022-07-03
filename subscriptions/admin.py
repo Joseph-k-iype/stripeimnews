@@ -13,6 +13,4 @@ class formadmin(admin.ModelAdmin):
 admin.site.register(StripeCustomer)
 admin.site.register(formforsubmit, formadmin)
 admin.site.register(Conversation)
-admin.site.register(Messages)
-admin.site.register(IpAddress)
 admin.site.register(tasksforoperations)

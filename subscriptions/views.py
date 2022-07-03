@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib import messages
-from subscriptions.forms import submitform
+from subscriptions.forms import *
 from subscriptions.models import  *
 import requests 
 
@@ -38,6 +38,8 @@ def index(request):
 def home(request):
     if(request.user.is_superuser):
         return(redirect("/admin"))
+    elif(request.user.is_staff):
+        return(redirect("/operations"))
     try:
         # Retrieve the subscription & product
         stripe_customer = StripeCustomer.objects.get(user=request.user)
@@ -235,20 +237,35 @@ def tasksview(request):
 @login_required
 def taskdetailview(request, id):
     #staff should view only thier tasks
+    form = tasksforoperationsform(request.POST, request.FILES)
     if request.user.is_staff:
         task = tasksforoperations.objects.get(id=id)
-        return render(request, 'task_detail.html', {'task': task})
+        if request.method == 'POST':
+            if form.is_valid():
+                form = form.save(commit=False)
+                form.user = request.user
+                form.save()
+                messages.success(request, "Task updated successfully")
+                return redirect('/task_detail/'+str(id))
+            else:
+                messages.error(request, "Error updating task")
+                return redirect('/task_detail/'+str(id))
+        return render(request, 'task_detail.html', {'task': task, 'form': form})
+
     else:
         task = tasksforoperations.objects.get(id=id)
         return render(request, 'task_detail.html', {'task': task})
         return redirect('/')
+    return render(request, 'task_detail.html', {'task': task, 'id': id, 'form': form})
 
 
 @login_required
 def showConversationsToAdmin(request):
     if(request.user.is_superuser):
-        convList = Conversation.objects.order_by('seenByAdmin')
-        return(render(request,"mail_list.html",{"conversations" : convList}))
+        # TODO Seperate staffConversations using foreign Key
+        userConv = Conversation.objects.filter(user__is_staff__lt=True).order_by('seenByAdmin')
+        staffConv = Conversation.objects.filter(user__is_staff__gte=True).order_by('seenByAdmin')
+        return(render(request,"mail_list.html",{"userConv" : userConv, "staffConv" : staffConv}))
     else:
         return(redirect("/"))
 
@@ -287,7 +304,7 @@ def getMessages(request, mEmail = ""):
 
 @login_required
 def messagePage(request, mEmail = ""):
-    print("EMAIL = " + mEmail)
+    
     if(request.user.is_superuser):
         # Message from and to the admin
         mUser = User.objects.filter(email = mEmail).get()
@@ -308,8 +325,6 @@ def messagePage(request, mEmail = ""):
                 i.seenByAdmin = True
                 i.save()
             return(render(request, "messages.html", {"messages" : messageList}))
-    
-    
     else:
         try:
             userConv = Conversation.objects.filter(user = request.user).get()
@@ -335,7 +350,6 @@ def messagePage(request, mEmail = ""):
 
 @login_required
 def newConversation(request):
-    print("NEW CONV CALLED")
     if(request.user.is_superuser):
         if(request.method == "POST"):
             mUser = User.objects.filter(email = request.POST["email"]).get()
@@ -352,7 +366,9 @@ def newConversation(request):
                 newMessage.save()
                 return(redirect("/admin/subscriptions/message/"+mUser.email))
         else:
-            userList = list(User.objects.all().values())
-            return(render(request, "startchat.html", {'userList' : userList}))
+            # TODO seperate userList and staffList
+            userList = list(User.objects.filter(is_staff = False).values())
+            staffList = list(User.objects.filter(is_staff = True).filter(is_superuser = False).values())
+            return(render(request, "startchat.html", {'userList' : userList , 'staffList' : staffList}))
     else:
         return(redirect("/"))
