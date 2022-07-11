@@ -27,3 +27,6 @@
     -> remove Publish article, your article and all
     -> Image added from CKEditor widget dont align properly in the view. 
        Create a task from admin put one image in and view it from the staff dashboard. 
+
+
+ 8) Coming from Stripe, it shows the operators dashboard : Redirecting from stripe not working properly

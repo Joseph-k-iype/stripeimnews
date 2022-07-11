@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth.account', # new
     'allauth.socialaccount', # new
     'django.contrib.sites', # new
+    'allauth.socialaccount.providers.google', # for Google OAuth 2.0
     'ckeditor',
     'hitcount',
 ]
@@ -362,4 +363,17 @@ ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_SESSION_REMEMBER = True
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
+SOCIALACCOUNT_QUERY_EMAIL = True
+ACCOUNT_LOGOUT_ON_GET= True
 ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+
+# EMAIL_HOST = 'smtp.mail.yahoo.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'imworldnews@yahoo.com'
+# EMAIL_HOST_PASSWORD = '123ubuntu17.04LTS'
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
