@@ -10,6 +10,8 @@ from django.db import models
 from ckeditor.fields import RichTextField
 from hitcount.views import HitCountDetailView
 from hitcount.models import HitCountMixin, HitCount
+#from phonenumber_field.modelfields import PhoneNumberField
+
 
 
 
@@ -27,6 +29,7 @@ class formforsubmit(models.Model):
     summary = models.CharField(max_length = 500)
     article = RichTextField(blank=True,null=True)
     schedule = models.DateTimeField()
+    #phoneNum = PhoneNumberField()
     published = models.BooleanField(default=False)
     prev_img = models.ImageField(upload_to = "uploads/")
     def __str__(self):

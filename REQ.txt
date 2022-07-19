@@ -1,8 +1,6 @@
 
  1) Login and register page error messages : 
-    -> incorrect password and all, messages need to be displayed nicely 
-       login.html line 76-91
-       signup.html line 75 - 87
+    
 
  2) Message Page UI : Fix colors for messages from other person
 
