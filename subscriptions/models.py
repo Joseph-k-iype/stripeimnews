@@ -1,8 +1,6 @@
 
 from datetime import datetime
 import json
-from msvcrt import getch
-from pyexpat import model
 from select import select
 from statistics import mode
 from django.contrib.auth.models import User

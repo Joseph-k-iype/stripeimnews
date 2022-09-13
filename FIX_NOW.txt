@@ -1,0 +1,13 @@
+1) Login with google button
+
+2) Admin Conversations page colors
+
+3) Colors of message buble in message page
+
+4) Put user conversations and staff conversations in 2 columns nicely
+
+5) Remove create article and all from staff dashboard. Keep only tasks and messages
+
+6) Change working of task fields in admin dashboard.. Make it read only and show as a textView
+
+7) validations on Schedule thing in create article
