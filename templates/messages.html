@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="{% static 'style1.css' %}">
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
   
@@ -148,9 +148,10 @@
         success: function (response) {
           if (response.messages.length > 0) {
             console.log(response.messages)
+            messages = JSON.parse(response.messages)
             //pass response.messages to html
-            for (var i = 0; i < response.messages.length; i++) {
-              var message = response.messages[i];
+            for (var i = 0; i < messages.length; i++) {
+              var message = messages[i];
               var html = '<div class="chat-log__item">' + '<div class="chat-log__message">' + message.message + '</div>' + '</div>';
               $('#chatLog').append(html);
               $(document).ready(function () {
@@ -205,9 +206,10 @@
         success: function (response) {
           if (response.messages.length > 0) {
             console.log(response.messages)
-            for (var i = 0; i < response.messages.length; i++) {
-              var message = response.messages[i];
-              var html = '<div class="chat-log__item">' + '<div class="chat-log__message">' + message.message + '</div>' + '</div>';
+            messages = JSON.parse(response.messages)
+            //pass response.messages to html
+            for (var i = 0; i < messages.length; i++) {
+              var message = messages[i]; var html = '<div class="chat-log__item">' + '<div class="chat-log__message">' + message.message + '</div>' + '</div>';
               $('#chatLog').append(html);
               $(document).ready(function () {
                 $('html, body').animate({
