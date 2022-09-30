@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
     <link rel="stylesheet" href="{% static 'css/form.css' %}">
 
+    <link rel="stylesheet" href="{% static 'css/page.css' %}">
+
 
 </head>
 
@@ -76,12 +78,12 @@
     </nav>
 
     <!--Background img-->
-    <img src="{% static 'img/earth1.jpg' %}" alt="earth img" class="earth_img">
+    <!-- <img src="{% static 'img/earth1.jpg' %}" alt="earth img" class="earth_img"> -->
 
     <!--Left Pane-->
 
 
-    <div class="card1">
+    <div class="container-fluid">
         {% if form.errors %}
         {% for field in form %}
         {% for error in field.errors %}
@@ -96,37 +98,75 @@
         </div>
         {% endfor %}
         {% endif %}
-        <form method="POST" action="/accounts/google/login/?next=%2Fhome">
+        <div class="row">
+            <div class="col-sm-6 col-md-7 intro-section">
+                <div class="brand-wrapper">
+                </div>
+                <div class="intro-content-wrapper">
+                    <h1 class="intro-title">Welcome to IM World News</h1>
+                    <h3>Bring your story to us</h3>
 
-            {% csrf_token %}
-            <button type="submit">
-                <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-                    <div class="google-btn">
-                    <div class="google-icon-wrapper">
-                        <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+                </div>
+                <div class="intro-section-footer" style="float: right">
+                    <na class="footer-nav">
+                        <a href="#!">Facebook</a>
+                        <a href="#!">Twitter</a>
+                        <a href="#!">Gmail</a>
+                    </na>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-5 form-section">
+                <p>
+
+                </p>
+                <div class="login-wrapper">
+                    <h2 class="login-title">Sign in</h2>
+                    <div class="form-group">
+                        <form method="POST" action="/accounts/google/login/?next=%2Fhome">
+
+                            {% csrf_token %}
+                            <button type="submit" style="border-radius: 0%; border-style: none; background: none; color: #ffffff;">
+
+                                <!-- <div class="google-btn">
+                                    <div class="google-icon-wrapper">
+                                        <img class="google-icon"
+                                            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+                                    </div>
+                                    <span class="material-icons"> </span>
+
+                                    <p class="btn-text"><b>Sign in with google</b></p>
+                                </div> -->
+                                <a class="btn btn-outline-light" role="button" style="text-transform:none; border-width: 0.2rem;">
+                                    <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in"
+                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+                                    Login with Google
+                                </a>
+
+                            </button>
+                        </form>
                     </div>
-                    <p class="btn-text"><b>Sign in with google</b></p>
-                    </div>
-            </button>
-        </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- <form class="login" method="POST" action="/accounts/login/">
-            {% csrf_token %}
-            <p>
-                <label for="id_login">E-mail:</label>
-                <input type="email" name="login" placeholder="E-mail address" autocomplete="email" required=""
-                    id="id_login">
-            </p>
-            <p>
-                <label for="id_password">Password:</label>
-                <input type="password" name="password" placeholder="Password" autocomplete="current-password"
-                    required="" id="id_password">
-            </p>
-            <input type="hidden" name="next" value="/home">
-            <a class="button secondaryAction" href="/accounts/password/reset/">Forgot Password?</a>
-            <button class="primaryAction" type="submit">Sign In</button>
-        </form> -->
+                {% csrf_token %}
+                <p>
+                    <label for="id_login">E-mail:</label>
+                    <input type="email" name="login" placeholder="E-mail address" autocomplete="email" required=""
+                        id="id_login">
+                </p>
+                <p>
+                    <label for="id_password">Password:</label>
+                    <input type="password" name="password" placeholder="Password" autocomplete="current-password"
+                        required="" id="id_password">
+                </p>
+                <input type="hidden" name="next" value="/home">
+                <a class="button secondaryAction" href="/accounts/password/reset/">Forgot Password?</a>
+                <button class="primaryAction" type="submit">Sign In</button>
+            </form> -->
     <!-- </div> -->
 
     <script src="{% static 'js/index.js' %}"></script>

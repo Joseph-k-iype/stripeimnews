@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='subscriptions-home'),
+    path("test/", views.index2, name='subscriptions-test'),
     path('home', views.home, name='subscriptions-home'),
     path('config/', views.stripe_config),  # new
     path('create-checkout-session/', views.create_checkout_session),  # new

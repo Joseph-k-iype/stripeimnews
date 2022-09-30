@@ -15,6 +15,7 @@ from subscriptions.models import  *
 import requests 
 
 import ipaddress
+import feedparser
 
 
 
@@ -33,6 +34,31 @@ def index(request):
     noofusers = User.objects.count()+100
     print(noofusers)
     return(render(request, "index.html", {'news' : news, 'count': count, 'noofusers': noofusers}))
+
+def index2(request):
+    # url of blog feed
+    feed_url = "https://news.google.com/rss/search?q=Business+News&hl=en-US&gl=US&ceid=US:en"
+
+    blog_feed = feedparser.parse(feed_url)
+        # returns title of the blog site
+    blog_feed.feed.title
+
+    # returns the link of the blog
+    # and number of entries(blogs) in the site.
+    blog_feed.feed.link
+    print(len(blog_feed.entries))
+    a = len(blog_feed.entries)
+
+    # Details of individual blog can
+    # be accessed by using attribute name
+    for i in range(a):
+        print(blog_feed.entries[i].title)
+        print(blog_feed.entries[i].link)
+        print(blog_feed.entries[i].description)
+
+
+
+    return(render(request, "index2.html"))
 
 @login_required
 def home(request):

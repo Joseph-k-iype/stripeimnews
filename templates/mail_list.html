@@ -209,7 +209,7 @@
                         </li>
 
 
-                        <li class="nav-header">Hitcount</li>
+                        <!-- <li class="nav-header">Hitcount</li>
 
                         <li class="nav-item">
 
@@ -245,7 +245,7 @@
                                 <p>Hits</p>
                             </a>
 
-                        </li>
+                        </li> -->
 
 
                         <li class="nav-header">Sites</li>
@@ -310,14 +310,14 @@
 
                         </li>
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
 
                             <a href="/admin/subscriptions/ipaddress/" class="nav-link">
                                 <i class="nav-icon fas fa-circle"></i>
                                 <p>Ip addresss</p>
                             </a>
 
-                        </li>
+                        </li> -->
 
                         <li class="nav-item">
 
@@ -397,29 +397,33 @@
                                                     </div>
                                                     <hr />
                                                 </div>
-                                                <h6>User conversations</h6>
-                                                <div>
-                                                    
-                                                    {% for item in userConv %}
+                                                <div class="col-6">
+                                                    <h6>User conversations</h6>
+                                                    <div>
+
+                                                        {% for item in userConv %}
+                                                        <br>
+                                                        <a href="/admin/subscriptions/message/{{ item.user.email }}">
+                                                            {{ item.user.username }}
+                                                        </a>
+                                                        {% endfor %}
+                                                    </div>
                                                     <br>
+                                                </div>
+                                                <div class="col-6">
+
+                                                <h6>Staff conversations</h6>
+                                                <div>
+                                                    <br>
+                                                    {% for item in staffConv %}
                                                     <a href="/admin/subscriptions/message/{{ item.user.email }}">
-                                                        {{ item.user.email }}
+                                                        {{ item.user.username }}
                                                     </a>
+                                                    <br>
                                                     {% endfor %}
                                                 </div>
-                                                <br>
-                                            </div>
-                                            <h6>Staff conversations</h6>
-                                            <div>
-                                                {% for item in staffConv %}
-                                                <a href="/admin/subscriptions/message/{{ item.user.email }}">
-                                                    {{ item.user.email }}
-                                                </a>
-                                                <br>
-                                                {% endfor %}
                                             </div>
 
-                                    
                                         </div>
                                     </div>
                                 </form>
