@@ -58,7 +58,7 @@ class submitform(forms.ModelForm):
 
 
 class tasksforoperationsform(forms.Form):
-    response = forms.CharField(widget = CKEditorWidget())
+    response = forms.CharField(widget = CKEditorWidget(), required=False)
     proof = forms.FileField(widget = forms.ClearableFileInput(attrs={'multiple': True}))
      
     # class Meta:

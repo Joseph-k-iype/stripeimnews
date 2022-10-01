@@ -301,6 +301,7 @@ def taskdetailview(request, id):
         task = Task.objects.get(id=id)
         if request.method == 'POST':
             if form.is_valid():
+
                 response = tasksubmissions(response = form.data["response"],  proof = request.FILES["proof"], task = task, user = request.user )
                 response.save()
                 messages.success(request, "Task updated successfully")

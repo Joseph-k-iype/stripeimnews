@@ -110,7 +110,7 @@ class tasksubmissions(models.Model):
     
 
     def __str__(self):
-        return self.response
+        return (self.task.task +" : " + self.user.username)
     class Meta:
         verbose_name = 'Task Response'
         
