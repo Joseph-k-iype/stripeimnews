@@ -18,6 +18,9 @@ import ipaddress
 import feedparser
 
 
+from subscriptions.models import task as Task
+
+
 
 def index(request):
     apiKey = "20ca105d900e4b7aa72e8e86f0e0d208"
@@ -295,7 +298,8 @@ def taskdetailview(request, id):
     #staff should view only thier tasks
     form = tasksforoperationsform(request.POST, request.FILES)
     if request.user.is_staff:
-        task = task.objects.get(id=id)
+        
+        mTask = Task.objects.get(id=id)
         if request.method == 'POST':
             if form.is_valid():
                 form = form.save(commit=False)
@@ -306,7 +310,7 @@ def taskdetailview(request, id):
             else:
                 messages.error(request, "Error updating task")
                 return redirect('/task_detail/'+str(id))
-        return render(request, 'task_detail.html', {'task': task, 'form': form})
+        return render(request, 'task_detail.html', {'task': mTask, 'form': form})
 
     else:
         task = task.objects.get(id=id)
