@@ -18,8 +18,8 @@ import ipaddress
 import feedparser
 
 
-from subscriptions.models import task as Task
 
+from subscriptions.models import task as Task
 
 
 def index(request):
@@ -299,7 +299,7 @@ def taskdetailview(request, id):
     form = tasksforoperationsform(request.POST, request.FILES)
     if request.user.is_staff:
         
-        mTask = Task.objects.get(id=id)
+        task = Task.objects.get(id=id)
         if request.method == 'POST':
             if form.is_valid():
                 form = form.save(commit=False)
@@ -310,7 +310,7 @@ def taskdetailview(request, id):
             else:
                 messages.error(request, "Error updating task")
                 return redirect('/task_detail/'+str(id))
-        return render(request, 'task_detail.html', {'task': mTask, 'form': form})
+        return render(request, 'task_detail.html', {'task': task, 'form': form})
 
     else:
         task = task.objects.get(id=id)
