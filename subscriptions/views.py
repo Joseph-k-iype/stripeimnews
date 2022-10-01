@@ -251,11 +251,41 @@ def stripe_webhook(request):
 
     return HttpResponse(status=200)
 
+# @login_required
+# def tasksview(request):
+#     #view for the tasks assigned to the user if user is a staff member
+#     if request.user.is_staff:
+#         tasks = task.objects.filter(user=request.user)
+#         return render(request, 'tasklist.html', {'tasks': tasks})
+# @login_required
+# def taskdetailview(request, id):
+#     #staff should view only thier tasks
+#     form = tasksforoperationsform(request.POST, request.FILES)
+#     if request.user.is_staff:
+#         task = task.objects.get(id=id)
+#         if request.method == 'POST':
+#             if form.is_valid():
+#                 form = form.save(commit=False)
+#                 form.user = request.user
+#                 form.save()
+#                 messages.success(request, "Task updated successfully")
+#                 return redirect('/task_detail/'+str(id))
+#             else:
+#                 messages.error(request, "Error updating task")
+#                 return redirect('/task_detail/'+str(id))
+#         return render(request, 'task_detail.html', {'task': task, 'form': form})
+
+#     else:
+#         task = task.objects.get(id=id)
+#         return render(request, 'task_detail.html', {'task': task})
+#         return redirect('/')
+#     return render(request, 'task_detail.html', {'task': tassk, 'id': id, 'form': form})
+
 @login_required
 def tasksview(request):
-    #staff should view only thier tasks
+    #view for the tasks assigned to the user if user is a staff member
     if request.user.is_staff:
-        tasks = tasksforoperations.objects.filter(user=request.user)
+        tasks = task.objects.filter(user=request.user)
         return render(request, 'tasklist.html', {'tasks': tasks})
     else:
         return redirect('/')
@@ -265,7 +295,7 @@ def taskdetailview(request, id):
     #staff should view only thier tasks
     form = tasksforoperationsform(request.POST, request.FILES)
     if request.user.is_staff:
-        task = tasksforoperations.objects.get(id=id)
+        task = task.objects.get(id=id)
         if request.method == 'POST':
             if form.is_valid():
                 form = form.save(commit=False)
@@ -279,11 +309,10 @@ def taskdetailview(request, id):
         return render(request, 'task_detail.html', {'task': task, 'form': form})
 
     else:
-        task = tasksforoperations.objects.get(id=id)
+        task = task.objects.get(id=id)
         return render(request, 'task_detail.html', {'task': task})
         return redirect('/')
-    return render(request, 'task_detail.html', {'task': task, 'id': id, 'form': form})
-
+    return render(request, 'task_detail.html', {'task': tassk, 'id': id, 'form': form})
 
 @login_required
 def showConversationsToAdmin(request):

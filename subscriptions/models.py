@@ -78,17 +78,35 @@ class responsefromuser(models.Model):
     class Meta:
         verbose_name = 'Response'
         
-class tasksforoperations(models.Model):
-    #create a task for the admin to perform for staff to perform
-    #only show staff users
-    user = models.ForeignKey(User, on_delete = models.CASCADE, limit_choices_to={'is_staff': True})
-    task_title = models.CharField(max_length=255)
-    task = RichTextField(max_length = 255)
-    published = models.BooleanField(default=False, verbose_name='Status')
+
+
+class task(models.Model):
+    #assign one task for multiple users
+    #select multiple users from the admin panel and assign them a task
+
+    user = models.ManyToManyField(User)
+    task = models.CharField(max_length = 255)
+    task_description = models.CharField(max_length = 255)
+    taskstatus = models.BooleanField(default=False)
+    task_date = models.DateTimeField()
     proof = models.ImageField(upload_to='proofs/',blank=True,null=True)
     commentbyoperator = RichTextField(blank=True,null=True)
-    #filter only staff
+    
     def __str__(self):
-        return self.user.username
+        return self.task
+
+    def __str__(self):
+        return self.task
     class Meta:
         verbose_name = 'Task'
+
+class tasksubmissions(models.Model):
+    # view all the responses from the users for a particular task
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    task = models.ForeignKey(task, on_delete = models.CASCADE)
+    response = RichTextField(blank=True,null=True)
+    def __str__(self):
+        return self.response
+    class Meta:
+        verbose_name = 'Task Response'
+        

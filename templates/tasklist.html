@@ -76,11 +76,9 @@
                 {% if subscription.status == "active" %}
 
                 <li class="nav-item">
-                    <a class="nav-link" href="postform"> Create Articles</a>
+                    <a class="nav-link" href="/operations"> Tasks</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/application">Your Articles</a>
-                </li>
+               
                 <li class="nav-item">
                     <a class="nav-link" href="/message">Messages</a>
                 </li>
@@ -88,11 +86,9 @@
                 {% else %}
 
                 <li class="nav-item">
-                    <a type="submit" class="nav-link" href="payment_info">Create Articles</a>
+                    <a type="submit" class="nav-link" href="/operations">Tasks</a>
                 </li>
-                <li type="submit" class="nav-item">
-                    <a type="submit" class="nav-link" href="payment_info">Your Articles</a>
-                </li>
+             
                 <li class="nav-item">
                     <a type="submit" class="nav-link" href="/message">Messages</a>
                 </li>
@@ -150,7 +146,7 @@
                     {% for t in tasks %}
 
                     <a href="{% url 'task_detail' t.id %}" class="list-group-item list-group-item-action active" style = "background: #0D1C2C;">
-                        <li class="list-group-item list-group-item-action active" style="background: #0D1C2C;">{{ t.task_title | safe }}
+                        <li class="list-group-item list-group-item-action active" style="background: #0D1C2C;">{{ t.task | safe }}
                         </li>
                     </a>
                     {% endfor %}
