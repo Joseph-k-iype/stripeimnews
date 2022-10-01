@@ -1,5 +1,6 @@
 
 from datetime import datetime
+from email.policy import default
 import json
 from select import select
 from statistics import mode
@@ -89,8 +90,6 @@ class task(models.Model):
     task_description = models.CharField(max_length = 255)
     taskstatus = models.BooleanField(default=False)
     task_date = models.DateTimeField()
-    proof = models.ImageField(upload_to='proofs/',blank=True,null=True)
-    commentbyoperator = RichTextField(blank=True,null=True)
     
     def __str__(self):
         return self.task
@@ -105,6 +104,11 @@ class tasksubmissions(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     task = models.ForeignKey(task, on_delete = models.CASCADE)
     response = RichTextField(blank=True,null=True)
+    proof = models.ImageField(upload_to='proofs/',blank=True,null=True)
+
+    completed_on = models.DateTimeField(default=datetime.now())
+    
+
     def __str__(self):
         return self.response
     class Meta:

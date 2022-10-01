@@ -298,15 +298,13 @@ def taskdetailview(request, id):
     #staff should view only thier tasks
     form = tasksforoperationsform(request.POST, request.FILES)
     if request.user.is_staff:
-        
         task = Task.objects.get(id=id)
         if request.method == 'POST':
             if form.is_valid():
-                form = form.save(commit=False)
-                form.user = request.user
-                form.save()
+                response = tasksubmissions(response = form.data["response"],  proof = request.FILES["proof"], task = task, user = request.user )
+                response.save()
                 messages.success(request, "Task updated successfully")
-                return redirect('/task_detail/'+str(id))
+                return redirect('/')
             else:
                 messages.error(request, "Error updating task")
                 return redirect('/task_detail/'+str(id))
